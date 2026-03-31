@@ -20,7 +20,7 @@ You are maintaining the **solana-claude-config** repository - a template/library
 | File | When loaded | Budget guidance |
 |------|-------------|-----------------|
 | `CLAUDE.md` | Session start; delivered as user message (uncached) | Keep <200 lines; costs every turn |
-| `CLAUDE-solana.md` | Session start (user projects) | Keep <100 lines; uncached; HTML comments stripped (free) |
+| `CLAUDE-solana.md` | Session start (user projects) | Keep <120 lines; uncached; HTML comments stripped (free) |
 | `MEMORY.md` | Session start | 200-line / 25KB cap; index pointers only |
 | `.claude/rules/*.md` (with `paths:`) | Lazy — on matching file read | Can be detailed; zero startup cost |
 | `.claude/rules/*.md` (no `paths:`) | Session start | Minimal — always loaded |
@@ -50,7 +50,7 @@ You are maintaining the **solana-claude-config** repository - a template/library
 - Run `bash validate.sh && bash tests/run_all.sh` before every commit
 - Check QUICK-START.md and README.md after any structural change
 - Test install.sh in a temp dir after modifying it
-- Keep CLAUDE-solana.md under 100 lines — it loads on every user conversation
+- Keep CLAUDE-solana.md under 120 lines — it loads on every user conversation
 
 ## Ripple Map
 <!-- CRITICAL: This is the #1 cause of stale docs. When adding/removing

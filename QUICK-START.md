@@ -64,7 +64,7 @@ After setup, run `/setup-mcp` in Claude Code to configure:
 
 **Testing & Quality:**
 - `/test-rust` - Run Rust tests
-- `/test-typescript` - Run TypeScript tests
+- `/test-ts` - Run TypeScript tests
 - `/test-dotnet` - Run .NET/Unity tests
 - `/test-and-fix` - Run tests and auto-fix issues
 - `/audit-solana` - Security audit

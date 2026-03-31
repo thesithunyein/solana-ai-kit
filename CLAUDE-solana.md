@@ -1,7 +1,7 @@
 # Solana Development Configuration
 
 <!-- MAINTAINER: This file ships as CLAUDE.md to target projects via install.sh.
-     Official target: <200 lines. Current: ~80 lines.
+     Official target: <150 lines. Current: ~110 lines.
      Language-specific rules live in .claude/rules/ — don't duplicate here.
      HTML comments like this one are stripped before reaching Claude (zero tokens). -->
 
