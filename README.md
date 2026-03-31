@@ -32,7 +32,7 @@ A complete `.claude/` configuration that turns Claude into a Solana development 
 
 ```bash
 # Option 0: Fork Template (Github UI)
-claude -m "/cleanup"  // then start claude code running cleanup so top-level directory of your project isn\'t polluted
+claude -m "/cleanup"  # then start claude code running cleanup so top-level directory of your project isn\'t polluted
 
 
 # Option 1: One-liner installer (Claude Code)
