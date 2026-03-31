@@ -11,7 +11,7 @@ Production-ready Claude Code configuration for full-stack Solana development. Co
 The idea here is to provide a generic CLAUDE.md that relies on subagents to plan and execute actions, dynamically loading markdown files, saving tokens and context in the end of the day. This config fully leverages the official Claude Code config recommendations:
 - Rules are only loaded whenever specific file types are involved;
 - SKILL.md is a mega hub to dynamically-disclosed skill files that are directly fetched from the best skill repos distributed across the ecosystem (Solana Foundation, Colosseum, Solana Mobile, SendAI, etc);
-- Plus, its CLAUDE-solana.md is less than half the size of the usual CLAUDE.md, leaving space for its self improvements programmed into the agents, noting and learning from anti-patterns, errors, recurrency and more.
+- Plus, its CLAUDE-solana.md is than half the size of the usual CLAUDE.md, leaving space for its self improvements programmed into the agents, noting and learning from anti-patterns, errors, recurrency and more. For less important notes, CLAUDE.local.md is constantly maintained by agents as well and, on monorepos, per-folder CLAUDE.md is also maintained.
 
 Current multi-agent workflow favors monorepos, so we use a single CLAUDE.md/config for the whole project while leveraging agents and context-specific skills to solve each step of builder flow.
 
@@ -31,10 +31,14 @@ A complete `.claude/` configuration that turns Claude into a Solana development 
 ## Quick Start
 
 ```bash
+# Option 0: Fork Template (Github UI)
+claude -m "/cleanup"  // then start claude code running cleanup so top-level directory of your project isn't polluted
+
+
 # Option 1: One-liner installer (Claude Code)
 curl -fsSL https://raw.githubusercontent.com/solanabr/solana-claude-config/main/install.sh | bash
 
-# Option 2: Agents + skills only (Cursor, Windsurf, Copilot, etc.)
+# Option 2: One-liner installer (Codex, Opencode, everything else)
 curl -fsSL https://raw.githubusercontent.com/solanabr/solana-claude-config/main/install.sh | bash -s -- --agents
 
 # Option 3: Manual setup
@@ -75,7 +79,21 @@ This guides you through API key configuration for Helius, Context7, and other MC
 
 ## Key Features
 
-### Agent-Ready Architecture
+## External Skill Submodules
+
+| Submodule | Source | Purpose |
+|-----------|--------|---------|
+| `ext/solana-dev` | [solana-foundation/solana-dev-skill](https://github.com/solana-foundation/solana-dev-skill) | Core Solana development (programs, frontend, testing, security) |
+| `ext/sendai` | [sendaifun/skills](https://github.com/sendaifun/skills) | DeFi protocol integrations (Jupiter, Drift, Raydium, etc.) |
+| `ext/solana-game` | [solanabr/solana-game-skill](https://github.com/solanabr/solana-game-skill) | Game development (Unity, PlaySolana, PSG1) |
+| `ext/cloudflare` | [cloudflare/skills](https://github.com/cloudflare/skills) | Infrastructure (Workers, Agents SDK, MCP servers) |
+| `ext/trailofbits` | [trailofbits/skills](https://github.com/trailofbits/skills) | Security auditing and vulnerability scanning |
+| `ext/qedgen` | [QEDGen/solana-skills](https://github.com/QEDGen/solana-skills) | Formal verification with Lean 4 theorem proving |
+| `ext/solana-mobile` | [nicoorfi/solana-mobile](https://github.com/nicoorfi/solana-mobile) | Mobile Wallet Adapter, Genesis Token, SKR address resolution |
+| `ext/colosseum` | [ColosseumOrg/colosseum-copilot](https://github.com/ColosseumOrg/colosseum-copilot) | Startup research, idea validation, hackathon projects (proprietary license) |
+| `ext/safe-solana-builder` | [frankcastleauditor/safe-solana-builder](https://github.com/frankcastleauditor/safe-solana-builder) | Security-first code generation (70+ audit-derived rules) |
+
+### Agent Teams
 
 Each agent loads its own specialized context on invocation:
 
@@ -86,11 +104,7 @@ Each agent loads its own specialized context on invocation:
 "Use solana-qa-engineer to write comprehensive tests"
 ```
 
-Claude will spawn each specialized agent by itself based on context.
-
-### Agent Teams
-
-With `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` enabled, orchestrate multi-agent workflows:
+Claude will spawn each specialized agent by itself based on context and, with `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` enabled, orchestrate multi-agent workflows:
 
 ```
 "Create an agent team: solana-architect for design, anchor-engineer for implementation, solana-qa-engineer for testing"
@@ -106,20 +120,6 @@ Recommended team patterns:
 | **game-ship** | game-architect → unity → qa | Game feature |
 | **defi-compose** | researcher → defi-engineer → qa | DeFi integration |
 | **token-launch** | token-engineer → frontend → qa | Token creation + launch UI |
-
-## External Skill Submodules
-
-| Submodule | Source | Purpose |
-|-----------|--------|---------|
-| `ext/solana-dev` | [solana-foundation/solana-dev-skill](https://github.com/solana-foundation/solana-dev-skill) | Core Solana development (programs, frontend, testing, security) |
-| `ext/sendai` | [sendaifun/skills](https://github.com/sendaifun/skills) | DeFi protocol integrations (Jupiter, Drift, Raydium, etc.) |
-| `ext/solana-game` | [solanabr/solana-game-skill](https://github.com/solanabr/solana-game-skill) | Game development (Unity, PlaySolana, PSG1) |
-| `ext/cloudflare` | [cloudflare/skills](https://github.com/cloudflare/skills) | Infrastructure (Workers, Agents SDK, MCP servers) |
-| `ext/trailofbits` | [trailofbits/skills](https://github.com/trailofbits/skills) | Security auditing and vulnerability scanning |
-| `ext/qedgen` | [QEDGen/solana-skills](https://github.com/QEDGen/solana-skills) | Formal verification with Lean 4 theorem proving |
-| `ext/solana-mobile` | [nicoorfi/solana-mobile](https://github.com/nicoorfi/solana-mobile) | Mobile Wallet Adapter, Genesis Token, SKR address resolution |
-| `ext/colosseum` | [ColosseumOrg/colosseum-copilot](https://github.com/ColosseumOrg/colosseum-copilot) | Startup research, idea validation, hackathon projects (proprietary license) |
-| `ext/safe-solana-builder` | [frankcastleauditor/safe-solana-builder](https://github.com/frankcastleauditor/safe-solana-builder) | Security-first code generation (70+ audit-derived rules) |
 
 ### MCP Server Integrations
 
