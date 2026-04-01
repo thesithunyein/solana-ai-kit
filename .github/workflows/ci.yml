@@ -21,7 +21,7 @@ jobs:
       - name: Validate JSON files
         run: |
           python3 -c "import json; json.load(open('.claude/settings.json'))"
-          python3 -c "import json; json.load(open('.claude/mcp.json'))"
+          python3 -c "import json; json.load(open('.mcp.json'))"
 
       - name: Run validation
         run: bash validate.sh
