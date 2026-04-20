@@ -181,7 +181,7 @@ Pre-configured MCP servers in `.mcp.json` (API keys go in `.env`):
     ├── bin/
     │   ├── update.sh                # In-place update from upstream
     │   └── resync.sh                # Submodule resync script
-    ├── commands/                # 24 workflow commands
+    ├── commands/                # 25 workflow commands
     ├── skills/                  # Progressive-loading knowledge
     │   ├── SKILL.md                 # Unified hub routing to all skills
     │   ├── ext/                     # External skill submodules
@@ -243,6 +243,7 @@ Pre-configured MCP servers in `.mcp.json` (API keys go in `.env`):
 | `/diff-review` | AI-powered diff review for Solana-specific issues |
 | `/profile-cu` | CU profiling per instruction with optimization suggestions |
 | `/benchmark` | CU benchmarks with before/after comparison |
+| `/debug-user-tx` | Replay a user's failing tx against forked state, map error to source |
 
 ### Deployment & Migration
 | Command | Purpose |

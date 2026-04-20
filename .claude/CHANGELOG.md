@@ -2,6 +2,11 @@
 
 All notable changes to solana-claude-config.
 
+## [1.5.0] - 2026-04-20
+
+### Added
+- **`/debug-user-tx` command**: Reproduce a user-reported failing transaction against forked cluster state and map the error back to source. Fetches tx via RPC, identifies the failing instruction, decodes the handler discriminator (Anchor IDL ≥0.30 or `sha256("global:<name>")` for <0.30), maps Anchor `Custom(N)` codes + well-known constraint codes (2000–3012) to `#[error_code]` variants with file:line pointers, diffs writable account state, and optionally replays via Surfpool (fork) or LiteSVM. Supports three modes: signature given, tx never landed, or failure inside an external CPI target.
+
 ## [1.4.0] - 2026-04-02
 
 ### Added
