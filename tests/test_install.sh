@@ -33,7 +33,7 @@ assert_eq "15" "$AGENT_COUNT" "Agent count is 15"
 
 # Count commands
 CMD_COUNT=$(find "$TEMP_DIR/.claude/commands" -name "*.md" | wc -l | tr -d ' ')
-assert_eq "24" "$CMD_COUNT" "Command count is 24"
+assert_eq "25" "$CMD_COUNT" "Command count is 25"
 
 # Check .gitignore was updated
 assert_file_exists "$TEMP_DIR/.gitignore" ".gitignore exists"

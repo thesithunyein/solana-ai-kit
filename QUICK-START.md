@@ -54,7 +54,7 @@ After setup, run `/setup-mcp` in Claude Code to configure:
 | **solana-guide** | Learning and tutorials |
 | **solana-researcher** | Ecosystem research |
 
-### 24 Slash Commands
+### 25 Slash Commands
 
 **Building:**
 - `/build-program` - Build Anchor or native programs
@@ -71,6 +71,7 @@ After setup, run `/setup-mcp` in Claude Code to configure:
 - `/diff-review` - AI-powered diff review
 - `/profile-cu` - CU profiling per instruction
 - `/benchmark` - CU benchmarks before/after
+- `/debug-user-tx` - Replay failing user tx, map error to source
 
 **Deployment & Migration:**
 - `/deploy` - Deploy to devnet/mainnet
@@ -148,7 +149,7 @@ your-project/
 ├── CLAUDE.md              # ← Main config (copied from CLAUDE-solana.md)
 ├── .claude/
 │   ├── agents/            # 15 specialized AI agents
-│   ├── commands/          # 24 slash commands
+│   ├── commands/          # 25 slash commands
 │   ├── skills/            # Progressive knowledge
 │   │   ├── SKILL.md           # Unified hub (start here)
 │   │   ├── ext/               # External skill submodules
