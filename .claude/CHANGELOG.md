@@ -2,18 +2,11 @@
 
 All notable changes to solana-ai-kit.
 
-## [2.1.0] - 2026-06-11
-
-### Changed
-- **Project renamed** solana-claude-config → **solana-ai-kit** (repo URL `solanabr/solana-ai-kit`): all docs, installer, and update-tooling references updated; env vars renamed to `SOLANA_AI_KIT_*` (`SOLANA_AI_KIT_LOCAL_SRC`, `SOLANA_AI_KIT_UPSTREAM`, `SOLANA_AI_KIT_BRANCH`) with `SOLANA_CLAUDE_*` back-compat fallbacks; VERSION package name updated
-- **New original brand banner**: slanted SOLANA wordmark (echoes the Solana logotype) + robotic half-block AI KIT tier, 7-row purple→green gradient — replaces the figlet-small wordmark (too close to solana-new's superstack banner)
-- README submodule/credits rows decluttered — inline license tags removed, license notices consolidated in Credits
-
 ## [2.0.0] - 2026-06-11
 
 ### Added
-- **Gradient ASCII SessionStart banner** + branded installer output, with NO_COLOR/plain-terminal fallback
-- **`/doctor` command**: read-only health check for the dev environment and solana-claude config — one exact fix-it command per failure
+- **Brand ASCII banner (SessionStart + installer)**: slanted SOLANA wordmark (echoes the Solana logotype) + robotic half-block AI KIT tier, 7-row purple→green gradient, with NO_COLOR/plain-terminal fallback
+- **`/doctor` command**: read-only health check for the dev environment and solana-ai-kit config — one exact fix-it command per failure
 - **`/audit-infra` command**: infrastructure-first security audit (secrets archaeology, dependency supply chain, CI/CD, LLM/skill security, OWASP Top 10, STRIDE) — adapted from cso by gstack (via sendaifun/solana-new, MIT), telemetry-free
 - **`/product-review` command**: product quality review with 8-dimension scorecard; `--harsh` for the brutal roast variant
 - **`/dream` command**: memory consolidation — dedupe, contradiction-check, prune, re-rank MEMORY.md + CLAUDE.md Project Learnings
@@ -23,9 +16,11 @@ All notable changes to solana-ai-kit.
 - **Permissions**: deny `Bash(curl *convex.cloud*)` — backstop against upstream telemetry preambles
 
 ### Changed
+- **Project renamed** solana-claude-config → **solana-ai-kit** (repo URL `solanabr/solana-ai-kit`): all docs, installer, and update-tooling references updated; env vars renamed to `SOLANA_AI_KIT_*` (`SOLANA_AI_KIT_LOCAL_SRC`, `SOLANA_AI_KIT_UPSTREAM`, `SOLANA_AI_KIT_BRANCH`) with `SOLANA_CLAUDE_*` back-compat fallbacks; VERSION package name updated
 - Enriched `solana-researcher` (DeFi market research + competitive landscape), `rust-backend-engineer` (indexer non-negotiables), `solana-guide` (EVM→Solana concept map + incubator loop), `token-engineer` (tokenomics pre-launch checklist), `/debug-user-tx` (common pitfalls encyclopedia), `/deploy` + `deployment.md` (upgrade-authority staging timeline)
 - Skills hub (`SKILL.md`) routing for GTM journey skills and the new security submodules
 - README Credits: full MIT notice for sendaifun/solana-new, cso/gstack credit, Apache-2.0 submodule notes, idea-dataset primary sources (Superteam, YC, a16z, Alliance)
+- README submodule/credits rows decluttered — inline license tags removed, license notices consolidated in Credits
 
 ### Fixed
 - Stale test counts and settings assertion
