@@ -36,12 +36,39 @@ else
   CONFIG_DIR=".claude"
 fi
 
+# ── Branding ──────────────────────────────────────────────────────────────
+# Solana gradient (purple → green), only on interactive truecolor terminals.
+# NO_COLOR (https://no-color.org) and non-TTY output stay plain.
+if [ -t 1 ] && [ -z "${NO_COLOR:-}" ] && printf %s "${COLORTERM:-}" | grep -qiE 'truecolor|24bit'; then
+  C1=$'\033[38;2;153;69;255m'; C2=$'\033[38;2;108;126;230m'
+  C3=$'\033[38;2;64;184;202m'; C4=$'\033[38;2;20;241;149m'
+  CDIM=$'\033[2m'; CRST=$'\033[0m'
+else
+  C1=""; C2=""; C3=""; C4=""; CDIM=""; CRST=""
+fi
+
+print_banner() {
+  printf '%s%s%s\n' "$C1" '  ___  ___  _      _   _  _   _      ___ _      _  _   _ ___  ___' "$CRST"
+  printf '%s%s%s\n' "$C2" ' / __|/ _ \| |    /_\ | \| | /_\    / __| |    /_\| | | |   \| __|' "$CRST"
+  printf '%s%s%s\n' "$C3" ' \__ \ (_) | |__ / _ \| .` |/ _ \  | (__| |__ / _ \ |_| | |) | _|' "$CRST"
+  printf '%s%s%s\n' "$C4" ' |___/\___/|____/_/ \_\_|\_/_/ \_\  \___|____/_/ \_\___/|___/|___|' "$CRST"
+  printf '%s\n\n' "${CDIM}by @SuperteamBR 🇧🇷${CRST}"
+}
+
+# Log helpers — glyph prefixes only; message text stays grep-stable.
+step() { printf '▸ %s\n' "$*"; }
+ok()   { printf '✓ %s\n' "$*"; }
+warn() { printf '! %s\n' "$*"; }
+fail() { printf '✗ %s\n' "$*"; }
+
+print_banner
+
 TEMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TEMP_DIR"' EXIT
 
 # Support local source for testing: SOLANA_CLAUDE_LOCAL_SRC=/path/to/repo
 if [ -n "${SOLANA_CLAUDE_LOCAL_SRC:-}" ] && [ -d "$SOLANA_CLAUDE_LOCAL_SRC/.claude" ]; then
-  echo "Using local source: $SOLANA_CLAUDE_LOCAL_SRC"
+  step "Using local source: $SOLANA_CLAUDE_LOCAL_SRC"
   mkdir -p "$TEMP_DIR/repo"
   cp -r "$SOLANA_CLAUDE_LOCAL_SRC/.claude" "$TEMP_DIR/repo/.claude"
   cp "$SOLANA_CLAUDE_LOCAL_SRC/CLAUDE-solana.md" "$TEMP_DIR/repo/CLAUDE-solana.md"
@@ -52,21 +79,21 @@ if [ -n "${SOLANA_CLAUDE_LOCAL_SRC:-}" ] && [ -d "$SOLANA_CLAUDE_LOCAL_SRC/.clau
   # CHANGELOG.md stays in the repo — not shipped to user projects
 else
   # Clone repo with submodules
-  echo "Cloning repository..."
+  step "Cloning repository..."
   git clone --recurse-submodules --depth 1 --branch "$BRANCH" "$REPO_URL" "$TEMP_DIR/repo" 2>&1 | tail -1 || true
 fi
 
 # Read version from source
 [ -f "$TEMP_DIR/repo/.claude/VERSION" ] && SCRIPT_VERSION="$(awk '{print $NF}' "$TEMP_DIR/repo/.claude/VERSION")"
 
-echo "Installing Solana Claude Config v$SCRIPT_VERSION to: $TARGET_DIR ($CONFIG_DIR/)"
+step "Installing Solana Claude Config v$SCRIPT_VERSION to: $TARGET_DIR ($CONFIG_DIR/)"
 
 # Copy .claude/ as $CONFIG_DIR (selective — protects user files)
-echo "Copying $CONFIG_DIR/ configuration..."
+step "Copying $CONFIG_DIR/ configuration..."
 mkdir -p "$TARGET_DIR/$CONFIG_DIR"
 
 if [ -d "$TARGET_DIR/$CONFIG_DIR/agents" ]; then
-  echo "Warning: $CONFIG_DIR/ already exists, merging..."
+  warn "Warning: $CONFIG_DIR/ already exists, merging..."
 fi
 
 # Directories: always overwrite with upstream (same as update.sh)
@@ -90,9 +117,9 @@ if [ -f "$TEMP_DIR/repo/.mcp.json" ] && [ ! -f "$TARGET_DIR/.mcp.json" ]; then
 fi
 
 # Copy CLAUDE-solana.md as CLAUDE.md
-echo "Copying CLAUDE.md..."
+step "Copying CLAUDE.md..."
 if [ -f "$TARGET_DIR/CLAUDE.md" ]; then
-  echo "Warning: CLAUDE.md already exists, backing up to CLAUDE.md.bak"
+  warn "Warning: CLAUDE.md already exists, backing up to CLAUDE.md.bak"
   cp "$TARGET_DIR/CLAUDE.md" "$TARGET_DIR/CLAUDE.md.bak"
 fi
 cp "$TEMP_DIR/repo/CLAUDE-solana.md" "$TARGET_DIR/CLAUDE.md"
@@ -121,8 +148,8 @@ if [ -f "$TEMP_DIR/repo/.gitmodules" ]; then
 fi
 
 # Initialize submodules in target
-echo "Initializing submodules..."
-(cd "$TARGET_DIR" && git submodule update --init --recursive 2>/dev/null) || echo "Note: Submodule init skipped (not a git repo or submodules already set up)"
+step "Initializing submodules..."
+(cd "$TARGET_DIR" && git submodule update --init --recursive 2>/dev/null) || warn "Note: Submodule init skipped (not a git repo or submodules already set up)"
 
 # Add $CONFIG_DIR/skills/ext/ to .gitignore if not present
 GITIGNORE="$TARGET_DIR/.gitignore"
@@ -132,12 +159,12 @@ if [ -f "$GITIGNORE" ]; then
     echo "" >> "$GITIGNORE"
     echo "# External Claude skill submodules" >> "$GITIGNORE"
     echo "$EXT_PATTERN" >> "$GITIGNORE"
-    echo "Added $EXT_PATTERN to .gitignore"
+    ok "Added $EXT_PATTERN to .gitignore"
   fi
 else
   echo "# External Claude skill submodules" > "$GITIGNORE"
   echo "$EXT_PATTERN" >> "$GITIGNORE"
-  echo "Created .gitignore with $EXT_PATTERN"
+  ok "Created .gitignore with $EXT_PATTERN"
 fi
 
 # Add CLAUDE.local.md to .gitignore (Claude creates it organically when needed)
@@ -152,7 +179,7 @@ if [ -f "$TEMP_DIR/repo/.env.example" ]; then
   merge_env_file "$TEMP_DIR/repo/.env.example" "$TARGET_DIR/.env.example"
   if [ ! -f "$TARGET_DIR/.env" ]; then
     cp "$TARGET_DIR/.env.example" "$TARGET_DIR/.env"
-    echo "Created .env from .env.example"
+    ok "Created .env from .env.example"
   else
     # Append new keys (with empty values) to existing .env
     merge_env_file "$TEMP_DIR/repo/.env.example" "$TARGET_DIR/.env"
@@ -160,16 +187,30 @@ if [ -f "$TEMP_DIR/repo/.env.example" ]; then
 fi
 
 echo ""
-echo "Installation complete!"
-echo ""
-echo "Next steps:"
-echo "  1. cd $TARGET_DIR"
-echo "  2. Edit .env to add your API keys (Helius, RPC, etc.)"
-echo "  3. Run 'claude' to start Claude Code with Solana config"
-echo "  4. Try /build-program or /audit-solana commands"
+BOX_LINES=(
+  "Installation complete!"
+  ""
+  "Next steps:"
+  "  1. cd $TARGET_DIR"
+  "  2. Edit .env to add your API keys (Helius, RPC, etc.)"
+  "  3. Run 'claude' to start Claude Code with Solana config"
+  "  4. Try /build-program or /audit-solana commands"
+)
 if [ "$AGENTS_ONLY" = true ]; then
-  echo ""
-  echo "Note: Installed into $CONFIG_DIR/ (--agents mode)."
-  echo "The .md files also work as system prompts or context for any AI tool"
-  echo "(Cursor, Windsurf, Copilot, etc.)."
+  BOX_LINES+=("")
+  BOX_LINES+=("Note: Installed into $CONFIG_DIR/ (--agents mode).")
+  BOX_LINES+=("The .md files also work as system prompts or context for any AI tool")
+  BOX_LINES+=("(Cursor, Windsurf, Copilot, etc.).")
 fi
+BOX_W=0
+for line in "${BOX_LINES[@]}"; do
+  if [ "${#line}" -gt "$BOX_W" ]; then BOX_W="${#line}"; fi
+done
+BOX_BORDER=""
+i=0
+while [ "$i" -lt $((BOX_W + 2)) ]; do BOX_BORDER="${BOX_BORDER}─"; i=$((i + 1)); done
+printf '%s╭%s╮%s\n' "$C1" "$BOX_BORDER" "$CRST"
+for line in "${BOX_LINES[@]}"; do
+  printf '%s│%s %-*s %s│%s\n' "$CDIM" "$CRST" "$BOX_W" "$line" "$CDIM" "$CRST"
+done
+printf '%s╰%s╯%s\n' "$C4" "$BOX_BORDER" "$CRST"

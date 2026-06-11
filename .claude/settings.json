@@ -239,7 +239,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '🤖 Solana Claude Config is ON 🚀🦾 powered by @SuperteamBR 🇧🇷'\necho ''\nif command -v solana >/dev/null 2>&1; then\n  echo \"🔗 $(solana config get | grep 'RPC URL' | awk '{print $3}')\"\n  echo \"👛 $(solana address 2>/dev/null || echo 'No wallet configured')\"\nelse\n  echo '⚠️  Solana CLI not found'\nfi"
+            "command": "V=$(awk 'NF{print $NF; exit}' \"${CLAUDE_PROJECT_DIR:-.}/.claude/VERSION\" 2>/dev/null)\n[ -n \"$V\" ] || V=dev\nif [ -z \"${NO_COLOR:-}\" ] && printf %s \"${COLORTERM:-}\" | grep -qiE 'truecolor|24bit'; then\n  G1=$(printf '\\033[38;2;153;69;255m'); G2=$(printf '\\033[38;2;108;126;230m')\n  G3=$(printf '\\033[38;2;64;184;202m'); G4=$(printf '\\033[38;2;20;241;149m')\n  DM=$(printf '\\033[2m'); RS=$(printf '\\033[0m')\nelse\n  G1=; G2=; G3=; G4=; DM=; RS=\nfi\nprintf '%s%s%s\\n' \"$G1\" '  ___  ___  _      _   _  _   _      ___ _      _  _   _ ___  ___' \"$RS\"\nprintf '%s%s%s\\n' \"$G2\" ' / __|/ _ \\| |    /_\\ | \\| | /_\\    / __| |    /_\\| | | |   \\| __|' \"$RS\"\nprintf '%s%s%s\\n' \"$G3\" ' \\__ \\ (_) | |__ / _ \\| .` |/ _ \\  | (__| |__ / _ \\ |_| | |) | _|' \"$RS\"\nprintf '%s%s%s\\n' \"$G4\" ' |___/\\___/|____/_/ \\_\\_|\\_/_/ \\_\\  \\___|____/_/ \\_\\___/|___/|___|' \"$RS\"\nprintf '%s\\n\\n' \"${DM}v$V — by @SuperteamBR 🇧🇷${RS}\"\nif command -v solana >/dev/null 2>&1; then\n  echo \"🔗 $(solana config get | grep 'RPC URL' | awk '{print $3}')\"\n  echo \"👛 $(solana address 2>/dev/null || echo 'No wallet configured')\"\nelse\n  echo '⚠️  Solana CLI not found'\nfi"
           }
         ]
       }
