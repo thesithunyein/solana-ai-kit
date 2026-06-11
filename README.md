@@ -1,8 +1,8 @@
-# Solana Claude Configuration
+# Solana AI Kit
 
-[![CI](https://github.com/solanabr/solana-claude-config/actions/workflows/ci.yml/badge.svg)](https://github.com/solanabr/solana-claude-config/actions/workflows/ci.yml)
-![Version](https://img.shields.io/badge/version-2.0.0-blue)
-![License](https://img.shields.io/github/license/solanabr/solana-claude-config)
+[![CI](https://github.com/solanabr/solana-ai-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/solanabr/solana-ai-kit/actions/workflows/ci.yml)
+![Version](https://img.shields.io/badge/version-2.1.0-blue)
+![License](https://img.shields.io/github/license/solanabr/solana-ai-kit)
 ![Solana](https://img.shields.io/badge/Solana-black?logo=solana)
 ![Claude Code](https://img.shields.io/badge/Claude_Code-powered-orange)
 
@@ -36,15 +36,15 @@ claude -m "/cleanup"  # then start claude code running /cleanup so top-level dir
 
 
 # Option 1: One-liner installer (Claude Code)
-curl -fsSL https://raw.githubusercontent.com/solanabr/solana-claude-config/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/solanabr/solana-ai-kit/main/install.sh | bash
 
 # Option 2: One-liner installer (Codex, Opencode, everything else)
-curl -fsSL https://raw.githubusercontent.com/solanabr/solana-claude-config/main/install.sh | bash -s -- --agents
+curl -fsSL https://raw.githubusercontent.com/solanabr/solana-ai-kit/main/install.sh | bash -s -- --agents
 
 # Option 3: Manual setup
-git clone --recurse-submodules https://github.com/solanabr/solana-claude-config.git
-cp -r solana-claude-config/.claude /path/to/your-project/
-cp solana-claude-config/CLAUDE-solana.md /path/to/your-project/CLAUDE.md
+git clone --recurse-submodules https://github.com/solanabr/solana-ai-kit.git
+cp -r solana-ai-kit/.claude /path/to/your-project/
+cp solana-ai-kit/CLAUDE-solana.md /path/to/your-project/CLAUDE.md
 cd /path/to/your-project && git submodule update --init --recursive
 
 # Start Claude Code
@@ -90,12 +90,12 @@ This guides you through API key configuration for Helius, Context7, and other MC
 | `ext/trailofbits` | [trailofbits/skills](https://github.com/trailofbits/skills) | Security auditing and vulnerability scanning |
 | `ext/qedgen` | [QEDGen/solana-skills](https://github.com/QEDGen/solana-skills) | Formal verification with Lean 4 theorem proving |
 | `ext/solana-mobile` | [solana-mobile/solana-mobile-dev-skill](https://github.com/solana-mobile/solana-mobile-dev-skill) | Mobile Wallet Adapter, Genesis Token, SKR address resolution |
-| `ext/colosseum` | [ColosseumOrg/colosseum-copilot](https://github.com/ColosseumOrg/colosseum-copilot) | Startup research, idea validation, hackathon projects (proprietary license) |
+| `ext/colosseum` | [ColosseumOrg/colosseum-copilot](https://github.com/ColosseumOrg/colosseum-copilot) | Startup research, idea validation, hackathon projects |
 | `ext/safe-solana-builder` | [frankcastleauditor/safe-solana-builder](https://github.com/frankcastleauditor/safe-solana-builder) | Security-first code generation (70+ audit-derived rules) |
 | `ext/vercel` | [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | Vercel deployment, Next.js, AI SDK, v0, edge functions |
-| `ext/solana-new` | [sendaifun/solana-new](https://github.com/sendaifun/solana-new) (MIT) | 32 idea→launch journey skills + idea datasets/knowledge base; routed via local wrappers |
-| `ext/ghostsecurity` | [ghostsecurity/skills](https://github.com/ghostsecurity/skills) (Apache-2.0) | 7 AppSec skills: SAST criteria, SCA, secrets, validation |
-| `ext/defending-code` | [anthropics/defending-code-reference-harness](https://github.com/anthropics/defending-code-reference-harness) (Apache-2.0) | Anthropic vuln-discovery reference harness + 6 skills |
+| `ext/solana-new` | [sendaifun/solana-new](https://github.com/sendaifun/solana-new) | 32 idea→launch journey skills + idea datasets/knowledge base; routed via local wrappers |
+| `ext/ghostsecurity` | [ghostsecurity/skills](https://github.com/ghostsecurity/skills) | 7 AppSec skills: SAST criteria, SCA, secrets, validation |
+| `ext/defending-code` | [anthropics/defending-code-reference-harness](https://github.com/anthropics/defending-code-reference-harness) | Anthropic vuln-discovery reference harness + 6 skills |
 
 ### Agent Teams
 
@@ -378,7 +378,7 @@ This project builds on excellent work from the community:
   >
   > THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-- **cso** by **gstack** - The infrastructure-first security audit methodology shipped in sendaifun/solana-new (MIT), the basis of our `/audit-infra` command (adapted telemetry-free).
+- **cso** by **gstack** - The infrastructure-first security audit methodology shipped in sendaifun/solana-new, the basis of our `/audit-infra` command (adapted telemetry-free).
 
 - **[ghostsecurity/skills](https://github.com/ghostsecurity/skills)** and **[anthropics/defending-code-reference-harness](https://github.com/anthropics/defending-code-reference-harness)** - AppSec scanning skills and Anthropic's vulnerability-discovery reference harness, both included as submodules under their Apache-2.0 licenses.
 

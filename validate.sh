@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Solana Claude Config Validator
+# Solana AI Kit Validator
 # Run from repo root to check config integrity.
 
 PASS=0
@@ -19,7 +19,7 @@ check() {
   fi
 }
 
-echo "Validating Solana Claude Config..."
+echo "Validating Solana AI Kit..."
 echo ""
 
 # --- Agent frontmatter ---

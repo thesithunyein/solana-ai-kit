@@ -1,4 +1,4 @@
-# Solana Claude Config - Meta Configuration
+# Solana AI Kit - Meta Configuration
 <!-- This is the config-repo maintainer file (NOT shipped to user projects).
      CLAUDE-solana.md is the one that ships as CLAUDE.md to target projects. -->
 
@@ -10,7 +10,7 @@ This repository contains Claude Code configuration for Solana development projec
 
 ## This Repo's Purpose
 
-You are maintaining the **solana-claude-config** repository - a template/library of Claude Code configurations for Solana development. Your role is to improve, test, and maintain the agents, skills, commands, MCP servers, and rules that other projects will use.
+You are maintaining the **solana-ai-kit** repository - a template/library of Claude Code configurations for Solana development. Your role is to improve, test, and maintain the agents, skills, commands, MCP servers, and rules that other projects will use.
 
 ## Token Loading Model
 <!-- WHY: Understanding when each file loads determines your token budget.
@@ -100,7 +100,7 @@ All changes on feature branches: `git checkout -b <type>/<scope>-<description>-<
 
 ## Testing Local Changes
 
-- **Local install test**: `SOLANA_CLAUDE_LOCAL_SRC=. bash install.sh /tmp/test-project` — uses local repo instead of cloning from GitHub.
+- **Local install test**: `SOLANA_AI_KIT_LOCAL_SRC=. bash install.sh /tmp/test-project` — uses local repo instead of cloning from GitHub (legacy `SOLANA_CLAUDE_LOCAL_SRC` still works).
 - **Agents-only mode**: `bash install.sh --agents /path` — installs to `.agents/` instead of `.claude/`. Test both modes when modifying install.sh.
 
 ## Release Management

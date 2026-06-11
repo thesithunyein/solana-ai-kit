@@ -17,7 +17,7 @@ echo ""
 
 # --- First install ---
 echo "[first install]"
-SOLANA_CLAUDE_LOCAL_SRC="$REPO_ROOT" bash "$REPO_ROOT/install.sh" "$TEMP_DIR" >/dev/null 2>&1
+SOLANA_AI_KIT_LOCAL_SRC="$REPO_ROOT" bash "$REPO_ROOT/install.sh" "$TEMP_DIR" >/dev/null 2>&1
 
 assert_dir_exists "$TEMP_DIR/.claude" ".claude/ exists after 1st install"
 assert_file_exists "$TEMP_DIR/CLAUDE.md" "CLAUDE.md exists after 1st install"
@@ -32,7 +32,7 @@ ORIGINAL_CLAUDE_MD="$(cat "$TEMP_DIR/CLAUDE.md")"
 
 # --- Second install ---
 echo "[second install]"
-SOLANA_CLAUDE_LOCAL_SRC="$REPO_ROOT" bash "$REPO_ROOT/install.sh" "$TEMP_DIR" >/dev/null 2>&1
+SOLANA_AI_KIT_LOCAL_SRC="$REPO_ROOT" bash "$REPO_ROOT/install.sh" "$TEMP_DIR" >/dev/null 2>&1
 
 # Verify NO nesting (.claude/.claude should not exist)
 assert_dir_not_exists "$TEMP_DIR/.claude/.claude" "No .claude/.claude nesting on 2nd install"

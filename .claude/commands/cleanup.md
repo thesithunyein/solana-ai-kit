@@ -2,7 +2,7 @@
 description: Initialize forked template — setup CLAUDE.md and remove config repo scaffolding
 ---
 
-Initialize a forked solana-claude-config template for use as a project. Sets up CLAUDE.md and removes config repo scaffolding files.
+Initialize a forked solana-ai-kit template for use as a project. Sets up CLAUDE.md and removes config repo scaffolding files.
 
 ## Step 1: Setup CLAUDE.md
 
@@ -48,4 +48,4 @@ Files/dirs that exist only for maintaining the config repo itself.
 2. Wait for user confirmation before proceeding
 3. Execute the removals
 4. Print summary of what was done
-5. Suggest: `git add -A && git commit -m "chore: initialize project from solana-claude-config template"`
+5. Suggest: `git add -A && git commit -m "chore: initialize project from solana-ai-kit template"`

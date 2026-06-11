@@ -15,7 +15,7 @@ echo "[test_install_agents_only] Installing --agents to temp directory: $TEMP_DI
 (cd "$TEMP_DIR" && git init -q)
 
 # Run install.sh in agents-only mode
-SOLANA_CLAUDE_LOCAL_SRC="$REPO_ROOT" bash "$REPO_ROOT/install.sh" --agents "$TEMP_DIR"
+SOLANA_AI_KIT_LOCAL_SRC="$REPO_ROOT" bash "$REPO_ROOT/install.sh" --agents "$TEMP_DIR"
 
 echo ""
 echo "[test_install_agents_only] Verifying --agents installation..."

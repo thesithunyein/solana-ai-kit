@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Solana Claude Config — In-Place Update
+# Solana AI Kit — In-Place Update
 # Fetches latest from upstream and applies updates.
 # Safe: backs up CLAUDE.md, preserves .env, shows diff.
 #
@@ -9,9 +9,12 @@ set -euo pipefail
 #   bash .claude/bin/update.sh              # from project root
 #   bash .agents/bin/update.sh              # from project root (agents mode)
 #   bash .claude/bin/update.sh --dry-run    # preview changes only
+#
+# Env: SOLANA_AI_KIT_UPSTREAM / SOLANA_AI_KIT_BRANCH override the source
+# (legacy SOLANA_CLAUDE_UPSTREAM / SOLANA_CLAUDE_BRANCH still honored)
 
-REPO_URL="${SOLANA_CLAUDE_UPSTREAM:-https://github.com/solanabr/solana-claude-config.git}"
-BRANCH="${SOLANA_CLAUDE_BRANCH:-main}"
+REPO_URL="${SOLANA_AI_KIT_UPSTREAM:-${SOLANA_CLAUDE_UPSTREAM:-https://github.com/solanabr/solana-ai-kit.git}}"
+BRANCH="${SOLANA_AI_KIT_BRANCH:-${SOLANA_CLAUDE_BRANCH:-main}}"
 DRY_RUN=false
 [[ "${1:-}" == "--dry-run" ]] && DRY_RUN=true
 
@@ -34,15 +37,16 @@ CURRENT_VERSION="unknown"
 TEMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TEMP_DIR"' EXIT
 
-# Fetch upstream
-if [ -n "${SOLANA_CLAUDE_LOCAL_SRC:-}" ] && [ -d "$SOLANA_CLAUDE_LOCAL_SRC/.claude" ]; then
-  echo "Using local source: $SOLANA_CLAUDE_LOCAL_SRC"
+# Fetch upstream (SOLANA_AI_KIT_LOCAL_SRC for local testing; legacy SOLANA_CLAUDE_LOCAL_SRC honored)
+LOCAL_SRC="${SOLANA_AI_KIT_LOCAL_SRC:-${SOLANA_CLAUDE_LOCAL_SRC:-}}"
+if [ -n "$LOCAL_SRC" ] && [ -d "$LOCAL_SRC/.claude" ]; then
+  echo "Using local source: $LOCAL_SRC"
   mkdir -p "$TEMP_DIR/repo"
-  cp -r "$SOLANA_CLAUDE_LOCAL_SRC/.claude" "$TEMP_DIR/repo/.claude"
-  [ -f "$SOLANA_CLAUDE_LOCAL_SRC/CLAUDE-solana.md" ] && cp "$SOLANA_CLAUDE_LOCAL_SRC/CLAUDE-solana.md" "$TEMP_DIR/repo/CLAUDE-solana.md"
-  [ -f "$SOLANA_CLAUDE_LOCAL_SRC/.mcp.json" ] && cp "$SOLANA_CLAUDE_LOCAL_SRC/.mcp.json" "$TEMP_DIR/repo/.mcp.json"
-  [ -f "$SOLANA_CLAUDE_LOCAL_SRC/.env.example" ] && cp "$SOLANA_CLAUDE_LOCAL_SRC/.env.example" "$TEMP_DIR/repo/.env.example"
-  [ -f "$SOLANA_CLAUDE_LOCAL_SRC/.gitmodules" ] && cp "$SOLANA_CLAUDE_LOCAL_SRC/.gitmodules" "$TEMP_DIR/repo/.gitmodules"
+  cp -r "$LOCAL_SRC/.claude" "$TEMP_DIR/repo/.claude"
+  [ -f "$LOCAL_SRC/CLAUDE-solana.md" ] && cp "$LOCAL_SRC/CLAUDE-solana.md" "$TEMP_DIR/repo/CLAUDE-solana.md"
+  [ -f "$LOCAL_SRC/.mcp.json" ] && cp "$LOCAL_SRC/.mcp.json" "$TEMP_DIR/repo/.mcp.json"
+  [ -f "$LOCAL_SRC/.env.example" ] && cp "$LOCAL_SRC/.env.example" "$TEMP_DIR/repo/.env.example"
+  [ -f "$LOCAL_SRC/.gitmodules" ] && cp "$LOCAL_SRC/.gitmodules" "$TEMP_DIR/repo/.gitmodules"
 else
   echo "Fetching latest from upstream..."
   git clone --recurse-submodules --depth 1 --branch "$BRANCH" "$REPO_URL" "$TEMP_DIR/repo" 2>&1 | tail -1 || true

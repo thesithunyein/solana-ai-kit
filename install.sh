@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Solana Claude Config Installer
+# Solana AI Kit Installer
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/solanabr/solana-claude-config/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/solanabr/solana-ai-kit/main/install.sh | bash
 #   bash install.sh /path/to/project
 #   bash install.sh --agents /path/to/project   # installs into .agents/ instead of .claude/
 
-REPO_URL="https://github.com/solanabr/solana-claude-config.git"
+REPO_URL="https://github.com/solanabr/solana-ai-kit.git"
 SCRIPT_VERSION="dev"
 
 # Resolve latest tagged release; fall back to main
@@ -40,18 +40,23 @@ fi
 # Solana gradient (purple → green), only on interactive truecolor terminals.
 # NO_COLOR (https://no-color.org) and non-TTY output stay plain.
 if [ -t 1 ] && [ -z "${NO_COLOR:-}" ] && printf %s "${COLORTERM:-}" | grep -qiE 'truecolor|24bit'; then
-  C1=$'\033[38;2;153;69;255m'; C2=$'\033[38;2;108;126;230m'
-  C3=$'\033[38;2;64;184;202m'; C4=$'\033[38;2;20;241;149m'
+  C1=$'\033[38;2;153;69;255m'; C2=$'\033[38;2;131;98;237m'
+  C3=$'\033[38;2;109;126;220m'; C4=$'\033[38;2;86;155;202m'
+  C5=$'\033[38;2;64;184;184m'; C6=$'\033[38;2;42;212;167m'
+  C7=$'\033[38;2;20;241;149m'
   CDIM=$'\033[2m'; CRST=$'\033[0m'
 else
-  C1=""; C2=""; C3=""; C4=""; CDIM=""; CRST=""
+  C1=""; C2=""; C3=""; C4=""; C5=""; C6=""; C7=""; CDIM=""; CRST=""
 fi
 
 print_banner() {
-  printf '%s%s%s\n' "$C1" '  ___  ___  _      _   _  _   _      ___ _      _  _   _ ___  ___' "$CRST"
-  printf '%s%s%s\n' "$C2" ' / __|/ _ \| |    /_\ | \| | /_\    / __| |    /_\| | | |   \| __|' "$CRST"
-  printf '%s%s%s\n' "$C3" ' \__ \ (_) | |__ / _ \| .` |/ _ \  | (__| |__ / _ \ |_| | |) | _|' "$CRST"
-  printf '%s%s%s\n' "$C4" ' |___/\___/|____/_/ \_\_|\_/_/ \_\  \___|____/_/ \_\___/|___/|___|' "$CRST"
+  printf '%s%s%s\n' "$C1" '   _____ ____  __    ___    _   _____' "$CRST"
+  printf '%s%s%s\n' "$C2" '  / ___// __ \/ /   /   |  / | / /   |' "$CRST"
+  printf '%s%s%s\n' "$C3" '  \__ \/ / / / /   / /| | /  |/ / /| |' "$CRST"
+  printf '%s%s%s\n' "$C4" ' ___/ / /_/ / /___/ ___ |/ /|  / ___ |' "$CRST"
+  printf '%s%s%s\n' "$C5" '/____/\____/_____/_/  |_/_/ |_/_/  |_|' "$CRST"
+  printf '%s%s%s\n' "$C6" '           ▄▀█ █   █▄▀ █ ▀█▀' "$CRST"
+  printf '%s%s%s\n' "$C7" '           █▀█ █   █ █ █  █' "$CRST"
   printf '%s\n\n' "${CDIM}by @SuperteamBR 🇧🇷${CRST}"
 }
 
@@ -66,16 +71,18 @@ print_banner
 TEMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TEMP_DIR"' EXIT
 
-# Support local source for testing: SOLANA_CLAUDE_LOCAL_SRC=/path/to/repo
-if [ -n "${SOLANA_CLAUDE_LOCAL_SRC:-}" ] && [ -d "$SOLANA_CLAUDE_LOCAL_SRC/.claude" ]; then
-  step "Using local source: $SOLANA_CLAUDE_LOCAL_SRC"
+# Support local source for testing: SOLANA_AI_KIT_LOCAL_SRC=/path/to/repo
+# (SOLANA_CLAUDE_LOCAL_SRC honored as legacy fallback)
+LOCAL_SRC="${SOLANA_AI_KIT_LOCAL_SRC:-${SOLANA_CLAUDE_LOCAL_SRC:-}}"
+if [ -n "$LOCAL_SRC" ] && [ -d "$LOCAL_SRC/.claude" ]; then
+  step "Using local source: $LOCAL_SRC"
   mkdir -p "$TEMP_DIR/repo"
-  cp -r "$SOLANA_CLAUDE_LOCAL_SRC/.claude" "$TEMP_DIR/repo/.claude"
-  cp "$SOLANA_CLAUDE_LOCAL_SRC/CLAUDE-solana.md" "$TEMP_DIR/repo/CLAUDE-solana.md"
-  [ -f "$SOLANA_CLAUDE_LOCAL_SRC/.mcp.json" ] && cp "$SOLANA_CLAUDE_LOCAL_SRC/.mcp.json" "$TEMP_DIR/repo/.mcp.json"
-  [ -f "$SOLANA_CLAUDE_LOCAL_SRC/.env.example" ] && cp "$SOLANA_CLAUDE_LOCAL_SRC/.env.example" "$TEMP_DIR/repo/.env.example"
-  [ -f "$SOLANA_CLAUDE_LOCAL_SRC/.gitmodules" ] && cp "$SOLANA_CLAUDE_LOCAL_SRC/.gitmodules" "$TEMP_DIR/repo/.gitmodules"
-  [ -f "$SOLANA_CLAUDE_LOCAL_SRC/.claude/VERSION" ] && cp "$SOLANA_CLAUDE_LOCAL_SRC/.claude/VERSION" "$TEMP_DIR/repo/.claude/VERSION"
+  cp -r "$LOCAL_SRC/.claude" "$TEMP_DIR/repo/.claude"
+  cp "$LOCAL_SRC/CLAUDE-solana.md" "$TEMP_DIR/repo/CLAUDE-solana.md"
+  [ -f "$LOCAL_SRC/.mcp.json" ] && cp "$LOCAL_SRC/.mcp.json" "$TEMP_DIR/repo/.mcp.json"
+  [ -f "$LOCAL_SRC/.env.example" ] && cp "$LOCAL_SRC/.env.example" "$TEMP_DIR/repo/.env.example"
+  [ -f "$LOCAL_SRC/.gitmodules" ] && cp "$LOCAL_SRC/.gitmodules" "$TEMP_DIR/repo/.gitmodules"
+  [ -f "$LOCAL_SRC/.claude/VERSION" ] && cp "$LOCAL_SRC/.claude/VERSION" "$TEMP_DIR/repo/.claude/VERSION"
   # CHANGELOG.md stays in the repo — not shipped to user projects
 else
   # Clone repo with submodules
@@ -86,7 +93,7 @@ fi
 # Read version from source
 [ -f "$TEMP_DIR/repo/.claude/VERSION" ] && SCRIPT_VERSION="$(awk '{print $NF}' "$TEMP_DIR/repo/.claude/VERSION")"
 
-step "Installing Solana Claude Config v$SCRIPT_VERSION to: $TARGET_DIR ($CONFIG_DIR/)"
+step "Installing Solana AI Kit v$SCRIPT_VERSION to: $TARGET_DIR ($CONFIG_DIR/)"
 
 # Copy .claude/ as $CONFIG_DIR (selective — protects user files)
 step "Copying $CONFIG_DIR/ configuration..."
@@ -219,4 +226,4 @@ printf '%s╭%s╮%s\n' "$C1" "$BOX_BORDER" "$CRST"
 for line in "${BOX_LINES[@]}"; do
   printf '%s│%s %-*s %s│%s\n' "$CDIM" "$CRST" "$BOX_W" "$line" "$CDIM" "$CRST"
 done
-printf '%s╰%s╯%s\n' "$C4" "$BOX_BORDER" "$CRST"
+printf '%s╰%s╯%s\n' "$C7" "$BOX_BORDER" "$CRST"

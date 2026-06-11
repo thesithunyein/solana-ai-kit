@@ -41,7 +41,7 @@ jobs:
         run: |
           TEMP_DIR=$(mktemp -d)
           (cd "$TEMP_DIR" && git init -q)
-          SOLANA_CLAUDE_LOCAL_SRC="$GITHUB_WORKSPACE" bash install.sh "$TEMP_DIR"
+          SOLANA_AI_KIT_LOCAL_SRC="$GITHUB_WORKSPACE" bash install.sh "$TEMP_DIR"
           test -d "$TEMP_DIR/.claude/agents"
           test -f "$TEMP_DIR/.claude/settings.json"
           python3 -c "import json; json.load(open('$TEMP_DIR/.claude/settings.json'))"
@@ -51,7 +51,7 @@ jobs:
         run: |
           TEMP_DIR=$(mktemp -d)
           (cd "$TEMP_DIR" && git init -q)
-          SOLANA_CLAUDE_LOCAL_SRC="$GITHUB_WORKSPACE" bash install.sh --agents "$TEMP_DIR"
+          SOLANA_AI_KIT_LOCAL_SRC="$GITHUB_WORKSPACE" bash install.sh --agents "$TEMP_DIR"
           test -d "$TEMP_DIR/.agents/agents"
           test ! -d "$TEMP_DIR/.claude"
           echo "✓ Agents mode smoke test passed"

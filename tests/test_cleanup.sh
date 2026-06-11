@@ -14,7 +14,7 @@ echo ""
 
 # --- Setup: Install + copy scaffolding files to simulate a forked template ---
 (cd "$TEMP_DIR" && git init -q)
-SOLANA_CLAUDE_LOCAL_SRC="$REPO_ROOT" bash "$REPO_ROOT/install.sh" "$TEMP_DIR" >/dev/null 2>&1
+SOLANA_AI_KIT_LOCAL_SRC="$REPO_ROOT" bash "$REPO_ROOT/install.sh" "$TEMP_DIR" >/dev/null 2>&1
 
 # Copy scaffolding files that would exist in a fork
 cp "$REPO_ROOT/install.sh" "$TEMP_DIR/install.sh"

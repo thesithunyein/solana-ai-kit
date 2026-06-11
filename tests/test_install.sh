@@ -15,7 +15,7 @@ echo "[test_install] Installing to temp directory: $TEMP_DIR"
 (cd "$TEMP_DIR" && git init -q)
 
 # Run install.sh targeting temp dir (use local source for testing)
-SOLANA_CLAUDE_LOCAL_SRC="$REPO_ROOT" bash "$REPO_ROOT/install.sh" "$TEMP_DIR"
+SOLANA_AI_KIT_LOCAL_SRC="$REPO_ROOT" bash "$REPO_ROOT/install.sh" "$TEMP_DIR"
 
 echo ""
 echo "[test_install] Verifying installation..."

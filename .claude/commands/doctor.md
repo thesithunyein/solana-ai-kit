@@ -1,8 +1,8 @@
 ---
-description: "Health check for the dev environment and solana-claude config — read-only, with one exact fix-it command per failure"
+description: "Health check for the dev environment and solana-ai-kit config — read-only, with one exact fix-it command per failure"
 ---
 
-You are running a health check on this project's toolchain and solana-claude configuration. **Read-only contract: this command never writes, edits, or deletes files.** It only inspects and reports.
+You are running a health check on this project's toolchain and solana-ai-kit configuration. **Read-only contract: this command never writes, edits, or deletes files.** It only inspects and reports.
 
 ## Related Commands
 
@@ -80,7 +80,7 @@ grep -E '^[A-Z_]+=$' .env 2>/dev/null | cut -d= -f1
 
 ```bash
 cat .claude/VERSION
-git ls-remote --tags --sort=-v:refname https://github.com/solanabr/solana-claude-config | head -3
+git ls-remote --tags --sort=-v:refname https://github.com/solanabr/solana-ai-kit | head -3
 ```
 
 - ✓ Local version matches latest upstream tag

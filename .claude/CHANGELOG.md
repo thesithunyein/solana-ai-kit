@@ -1,6 +1,13 @@
 # Changelog
 
-All notable changes to solana-claude-config.
+All notable changes to solana-ai-kit.
+
+## [2.1.0] - 2026-06-11
+
+### Changed
+- **Project renamed** solana-claude-config → **solana-ai-kit** (repo URL `solanabr/solana-ai-kit`): all docs, installer, and update-tooling references updated; env vars renamed to `SOLANA_AI_KIT_*` (`SOLANA_AI_KIT_LOCAL_SRC`, `SOLANA_AI_KIT_UPSTREAM`, `SOLANA_AI_KIT_BRANCH`) with `SOLANA_CLAUDE_*` back-compat fallbacks; VERSION package name updated
+- **New original brand banner**: slanted SOLANA wordmark (echoes the Solana logotype) + robotic half-block AI KIT tier, 7-row purple→green gradient — replaces the figlet-small wordmark (too close to solana-new's superstack banner)
+- README submodule/credits rows decluttered — inline license tags removed, license notices consolidated in Credits
 
 ## [2.0.0] - 2026-06-11
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Solana Claude Config — Submodule Resync
+# Solana AI Kit — Submodule Resync
 # Updates external skill submodules to latest and verifies integrity.
 #
 # Usage:

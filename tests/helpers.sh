@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Shared test helpers for Solana Claude Config test suite
+# Shared test helpers for Solana AI Kit test suite
 
 PASS=0
 FAIL=0

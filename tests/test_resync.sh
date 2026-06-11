@@ -51,7 +51,7 @@ echo "[installed]"
 TEMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TEMP_DIR"' EXIT
 (cd "$TEMP_DIR" && git init -q)
-SOLANA_CLAUDE_LOCAL_SRC="$REPO_ROOT" bash "$REPO_ROOT/install.sh" "$TEMP_DIR" >/dev/null 2>&1
+SOLANA_AI_KIT_LOCAL_SRC="$REPO_ROOT" bash "$REPO_ROOT/install.sh" "$TEMP_DIR" >/dev/null 2>&1
 
 assert_file_exists "$TEMP_DIR/.claude/bin/resync.sh" "resync.sh exists after install"
 

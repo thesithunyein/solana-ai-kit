@@ -97,7 +97,7 @@ echo "Frontend project created with @solana/kit."
 
 ```bash
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-CONFIG_SOURCE="${SCRIPT_DIR}/../../.."  # Adjust path to solana-claude-config root
+CONFIG_SOURCE="${SCRIPT_DIR}/../../.."  # Adjust path to solana-ai-kit root
 
 echo "Installing Claude Code configuration..."
 
@@ -107,9 +107,9 @@ if [ -d "$CONFIG_SOURCE/.claude" ]; then
     echo "Copied .claude/ config"
 else
     echo "WARNING: Could not find .claude config source at $CONFIG_SOURCE"
-    echo "Manually copy from solana-claude-config:"
-    echo "  cp -r /path/to/solana-claude-config/.claude ."
-    echo "  cp /path/to/solana-claude-config/CLAUDE-solana.md ./CLAUDE.md"
+    echo "Manually copy from solana-ai-kit:"
+    echo "  cp -r /path/to/solana-ai-kit/.claude ."
+    echo "  cp /path/to/solana-ai-kit/CLAUDE-solana.md ./CLAUDE.md"
 fi
 
 # Copy CLAUDE.md
@@ -171,7 +171,7 @@ fi
 
 # Initial commit
 git add -A
-git commit -m "feat: scaffold $PROJECT_NAME with solana-claude-config"
+git commit -m "feat: scaffold $PROJECT_NAME with solana-ai-kit"
 
 echo ""
 echo "Git initialized with initial commit."

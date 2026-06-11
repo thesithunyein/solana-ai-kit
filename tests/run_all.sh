@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Test runner for Solana Claude Config
+# Test runner for Solana AI Kit
 # Runs all test_*.sh files and reports results.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -12,7 +12,7 @@ FAILED_SUITES=0
 FAILED_NAMES=""
 
 echo "========================================"
-echo " Solana Claude Config - Test Suite"
+echo " Solana AI Kit - Test Suite"
 echo "========================================"
 echo ""
 
