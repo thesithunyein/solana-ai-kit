@@ -229,7 +229,8 @@
       "Bash(spl-token burn *)",
       "Bash(spl-token close *)",
       "Bash(git push * --force*)",
-      "Bash(git push * -f *)"
+      "Bash(git push * -f *)",
+      "Bash(curl *convex.cloud*)"
     ]
   },
 

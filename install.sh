@@ -172,6 +172,12 @@ if ! grep -qF "CLAUDE.local.md" "$GITIGNORE"; then
   echo "CLAUDE.local.md" >> "$GITIGNORE"
 fi
 
+# Add $CONFIG_DIR/context/ to .gitignore (phase-handoff files: idea.md, build.md)
+CONTEXT_PATTERN="$CONFIG_DIR/context/"
+if ! grep -qF "$CONTEXT_PATTERN" "$GITIGNORE"; then
+  echo "$CONTEXT_PATTERN" >> "$GITIGNORE"
+fi
+
 # Merge .env.example (append-only — preserves user edits on reinstall)
 # shellcheck source=.claude/bin/_env_merge.sh
 source "$TEMP_DIR/repo/.claude/bin/_env_merge.sh"

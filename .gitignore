@@ -267,6 +267,9 @@ flycheck_*.el
 # Local Claude settings (keep the default settings.json)
 .claude/settings.local.json
 
+# Phase-handoff context files (idea.md, build.md — per-session, never committed)
+.claude/context/
+
 # Temporary files
 tmp/
 temp/
