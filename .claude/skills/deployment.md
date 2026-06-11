@@ -219,6 +219,15 @@ async function proposeUpgrade(
 }
 ```
 
+### Upgrade Authority Staging
+
+<!-- Adapted from sendaifun/solana-new (deploy-to-mainnet), MIT -->
+Stage the path to immutability rather than freezing at launch:
+
+1. **Launch → ~3 months** — keep upgrade authority on a secured deployer key (hardware wallet). Bugs surface early; you need the ability to ship fixes fast.
+2. **~3 months post-launch** — transfer authority to the Squads multisig (above). Removes single-key risk once the program is stable.
+3. **Post-audit, battle-tested** — freeze: `solana program set-upgrade-authority <PROGRAM_ID> --final`. Irreversible and removes any rollback path — only after extensive mainnet history and a completed audit.
+
 ---
 
 ## CI/CD Pipeline

@@ -262,6 +262,64 @@ Track investigation path for coherence
 [Other options for same use case]
 ```
 
+## DeFi Market Research
+
+<!-- Adapted from sendaifun/solana-new (defillama-research), MIT -->
+For quantitative DeFi questions, query DefiLlama directly — free, no auth, current. Base URLs: `api.llama.fi` (TVL/volume/fees), `yields.llama.fi` (pools), `stablecoins.llama.fi` (stablecoins).
+
+| Endpoint Group | Endpoints | Returns |
+|----------------|-----------|---------|
+| Protocols / TVL | `/protocols`, `/protocol/{name}`, `/tvl/{name}` | All protocols with TVL, category, change metrics; per-protocol history |
+| Chains | `/v2/chains`, `/v2/historicalChainTvl/{chain}` | TVL per chain; historical chain TVL |
+| DEX volume | `/overview/dexs`, `/overview/dexs/{chain}` | Volume overview, all chains or per-chain |
+| Fees / revenue | `/overview/fees`, `/overview/fees/{chain}`, `/summary/fees/{protocol}` | Real revenue — always pair with TVL |
+| Yields | `/pools`, `/chart/{pool}` (yields base URL) | APY + TVL per pool; pool history |
+| Stablecoins | `/stablecoins`, `/stablecoincharts/{chain}` (stablecoins base URL) | Market caps; per-chain flows |
+
+Filter for Solana: `chain === "Solana"` or `chains` array includes `"Solana"`; chain-scoped endpoints (e.g. `/overview/dexs/Solana`) return Solana-only data directly.
+
+### TVL as a Trust Metric
+
+TVL is real capital at risk — the closest thing DeFi has to a trust signal. Interpret it, don't just rank it:
+
+| Signal | Read |
+|--------|------|
+| $1B+ TVL | Market leader — safe to build on, hard to compete with |
+| $100M–$1B | Established — best integration targets |
+| $10M–$100M, growing >20%/mo | **Opportunity zone** — proven demand, beatable incumbent |
+| <$1M | Experimental — don't build on it unless you know the team |
+| TVL spikes right after incentives launch | Farming, not organic — discount it |
+| High TVL, low fees | Capital parking, not real usage |
+| TVL growing, fees flat/declining | Users aren't actually using it |
+
+Key distinction: a $10B protocol is *trusted*; a $10M protocol growing +50%/month is the *opportunity*. Cross-reference TVL with fees/revenue and growth trend before drawing conclusions, and flag declining-TVL protocols explicitly.
+
+## Competitive Landscape Method
+
+<!-- Adapted from sendaifun/solana-new (competitive-landscape), MIT -->
+When the research question is "what exists in this space", map it systematically — never report "no competition" until every search path is exhausted.
+
+**Search order**: Solana ecosystem → other chains (Ethereum, Base, Sui equivalents) → hackathon submissions (Colosseum — see Related Skills) → dead projects (GitHub archives, post-mortems) → non-crypto substitutes.
+
+**Classify every finding**:
+- **Competitor** — same problem, same user
+- **Substitute** — same problem, different approach (include at least one non-crypto substitute when applicable)
+- **Dead project** — record *why* it died (tech, timing, team); failures map the landmines
+
+**Capture per entry**: name, URL, status (live/beta/dead/pivot), chain, traction estimate (users/TVL/stars), strength, weakness, threat level.
+
+**Crowdedness scale (1–5)**:
+
+| Score | Label | Meaning |
+|-------|-------|---------|
+| 1 | Empty | Nothing found — novel idea or bad search; verify before celebrating |
+| 2 | Sparse | 1–2 early projects, no traction |
+| 3 | Moderate | 3–5 projects, some traction, no clear winner |
+| 4 | Crowded | 5+ projects, at least one with strong traction |
+| 5 | Saturated | Dominant winner, high switching costs — find a niche or don't enter |
+
+**Moat analysis** — identify which defense is realistic and when it kicks in: network effects (strongest, hardest to bootstrap), switching costs (weak in crypto — forks), data advantages (grows with usage), technical complexity (real but temporary — everything is open source), distribution/ecosystem lock-in (strong — composability creates dependency chains), brand/trust (slow to build, fast to lose).
+
 ## Self-Reflection Checkpoints
 
 After each major research step:

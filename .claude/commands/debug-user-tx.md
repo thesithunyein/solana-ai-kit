@@ -195,6 +195,34 @@ Scan `meta.logMessages` for:
 
 Quote the last 10–15 log lines in the report.
 
+### Common Pitfalls Encyclopedia
+
+<!-- Adapted from sendaifun/solana-new (debug-program), MIT -->
+Once the error is identified, check it against the top-20 below — most user-reported failures map to one of these. Use it to jump from symptom to root-cause hypothesis before reaching for a replay.
+
+| # | Symptom / error | Root cause | Fix |
+|---|-----------------|------------|-----|
+| 1 | `ConstraintSeeds` (2006) on a PDA account | Client derives the PDA with different seeds/order/encoding than the program | Mirror the program's seeds exactly in `findProgramAddressSync` — same order, same byte encoding |
+| 2 | `MissingRequiredSignature` / `ConstraintSigner` (2002) | Required signer missing from the tx signers list | Add the keypair via `.signers([...])` for every non-fee-payer signer |
+| 3 | `BlockhashNotFound` / `TransactionExpiredBlockheightExceeded` | Blockhash older than ~60s when the tx landed | Fetch `getLatestBlockhash()` right before sending; retry against `lastValidBlockHeight` |
+| 4 | `AccountNotInitialized` (3012) | Account never created, or init tx not confirmed before use | Run the initialize instruction first; don't reach for `init_if_needed` (reinit-attack risk) |
+| 5 | `DeclaredProgramIdMismatch` | `declare_id!` doesn't match the deployed program | `anchor keys sync && anchor build`, redeploy |
+| 6 | Token transfer fails / `TokenAccountNotFound` | Recipient has no ATA for that mint | `getOrCreateAssociatedTokenAccount` before transferring (~0.002 SOL rent) |
+| 7 | `ComputationalBudgetExceeded` / `ProgramFailedToComplete` | Instruction exceeds the CU limit (200k default) | Add `ComputeBudgetProgram.setComputeUnitLimit` sized from a simulation + 20% buffer |
+| 8 | `InsufficientFundsForRent` (0x4) | Account balance below the rent-exempt minimum | Fund with `getMinimumBalanceForRentExemption(dataSize)` at creation |
+| 9 | Token amounts off by 10^n | Hardcoded decimals instead of reading the mint | Read `getMint().decimals` (SOL = 9, USDC = 6, some mints 0) |
+| 10 | `AccountDataTooSmall` / borsh deserialize error | `space` too small for the account struct | Recompute: `8 + <Struct>::INIT_SPACE` via `#[derive(InitSpace)]` |
+| 11 | `0x0` "already in use" on create | `init` on an account that already exists | Check existence client-side and skip the init instruction |
+| 12 | `ConstraintMut` (2000) | Handler writes to an account not marked `#[account(mut)]` | Add `mut` to the constraint (and `isWritable` client-side) |
+| 13 | `AccountOwnedByWrongProgram` on token ops | SPL Token vs Token-2022 mismatch | Check the mint's owner; pass the matching `token_program` everywhere |
+| 14 | `TransactionTooLarge` (>1232 bytes) | Too many accounts/instructions in one tx | Use Address Lookup Tables (versioned tx) or split the tx |
+| 15 | "wrong mint" in DeFi flows funded with SOL | Program expects wrapped SOL, got native | Wrap: create `NATIVE_MINT` ATA + transfer + `syncNative`; close the ATA to unwrap |
+| 16 | Tx sits "processing" then expires (mainnet) | Priority fee absent or too low for congestion | `setComputeUnitPrice` from the `getRecentPrioritizationFees` median |
+| 17 | Stale reads / "account not found" right after create | Commitment mismatch (read below the confirm level) | `confirmTransaction(sig, "confirmed")`, then read at the same commitment |
+| 18 | `InstructionFallbackNotFound` / garbage deserialization | Client IDL older than the deployed program | `anchor build`, re-copy `target/idl/*.json` to the client |
+| 19 | Lamport leak / "account still has data" on close | Manual close without zeroing data | Use Anchor's `#[account(mut, close = destination)]` |
+| 20 | `CallDepthExceeded` | CPI chain deeper than 4 levels | Flatten the call graph — combine operations or restructure |
+
 ## Step 5: Local Replay (optional but recommended)
 
 Replay against forked state at `slot - 1` to confirm the diagnosis and enable iteration.

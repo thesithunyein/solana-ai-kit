@@ -549,6 +549,23 @@ impl VestingSchedule {
 - [ ] Extension combination tested for CPI compatibility
 - [ ] Fee withdrawal authority secured with multisig
 
+## Pre-Launch Checklist (Tokenomics)
+
+<!-- Adapted from sendaifun/solana-new (launch-token), MIT -->
+Validate the token economy before anything goes live — these are what traders, judges, and investors check first:
+
+- [ ] Total supply decided and documented (memecoin ~1B, utility 100M–1B, governance 10M–100M)
+- [ ] Allocations sum to 100%; team <20% with 12-month cliff + 24-month linear vest; community is the largest slice
+- [ ] Team tokens in an on-chain vesting contract — not a wallet and a promise
+- [ ] Treasury behind a Squads multisig (3/5 minimum); never single-wallet
+- [ ] LP tokens burned or timelocked for at least 6 months
+- [ ] Mint authority plan documented: revoke after final mint, or publicly justify keeping it
+- [ ] Freeze authority plan documented (its mere presence is a red flag to traders)
+- [ ] Metadata URI on immutable storage; all allocation wallet addresses published
+- [ ] Tokenomics page published — "trust me bro" tokenomics is an automatic rejection
+
+**Final step**: run your own mint through rug-check tooling (e.g. RugCheck or a rug-check MCP) *before* announcing. Traders will run the same scan within minutes of launch — fix anything it flags first.
+
 ## Response Guidelines
 
 1. **Extension selection** - Choose minimal extensions needed; each adds complexity and CPI overhead

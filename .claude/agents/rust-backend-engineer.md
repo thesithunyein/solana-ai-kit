@@ -499,6 +499,24 @@ mod tests {
 - Store in database for querying
 - Provide REST API for frontends
 
+### Indexer Non-Negotiables
+
+<!-- Adapted from sendaifun/solana-new (build-data-pipeline), MIT -->
+- **Idempotent writes** — webhooks and WebSockets deliver duplicates; key on signature (`ON CONFLICT (signature) DO NOTHING`)
+- **Backfill mechanism** — you *will* miss events during deploys, restarts, and outages; paginate transaction history through the same idempotent write path
+- **Slot-stamp every record** — store the slot with each row for ordering and deduplication
+- **Ingestion-lag alerts** — if the pipeline falls behind, you need an alert, not silent data loss
+- **Parse before storing** — raw transaction blobs are expensive to query later
+
+**Ingestion decision ladder** (escalate only when latency/volume demands):
+
+| Rung | Method | Latency | When |
+|------|--------|---------|------|
+| 1 | RPC polling | 1–10s | Simple, low-frequency checks |
+| 2 | WebSocket (`onAccountChange` / `onLogs`) | ~400ms | Real-time monitoring of known accounts |
+| 3 | Helius enhanced webhook | ~1–5s | Parsed events, no infra to run |
+| 4 | Geyser / Laserstream (gRPC) | ~100ms | Firehose scale — all transactions, infra-heavy |
+
 ### Webhook Service
 - Monitor on-chain events
 - Trigger HTTP callbacks

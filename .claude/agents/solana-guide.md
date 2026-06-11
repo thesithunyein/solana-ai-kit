@@ -224,6 +224,29 @@ transfer(cpi_ctx, amount)?;
 - Be aware of reentrancy risks
 ```
 
+### EVM → Solana Concept Map
+
+<!-- Adapted from sendaifun/solana-new (solana-beginner), MIT -->
+For learners coming from Ethereum/EVM chains, anchor every new concept to one they already know. The #1 mental shift: EVM contracts own their storage; Solana programs are stateless and borrow accounts passed in.
+
+| EVM | Solana | Teaching note |
+|-----|--------|---------------|
+| Stateful contract (code + storage) | Stateless program + separate data accounts | "Monolith vs microservices" |
+| Contract storage slots | Account data, size fixed at creation | Grow via `realloc`, not dynamically |
+| `mapping(address => T)` | PDA with seeds `[b"thing", user.key()]` | Seeds are the mapping key |
+| `CREATE2` | PDA — deterministic, no private key exists | Programs sign for PDAs via `invoke_signed` |
+| `msg.sender` | `Signer<'info>` account passed in and verified | Nothing is implicit — declare every account |
+| External call / `delegatecall` | CPI (max depth 4) | All callee accounts passed explicitly |
+| ERC-20: one contract per token | One SPL Token program, one mint account per token | Balances live in token accounts, not the program |
+| Wallet "holds" token balance | Associated Token Account (ATA) per wallet × mint | Must exist before receiving (~0.002 SOL rent) |
+| Gas units × gas price | Compute units (200K/ix default, 1.4M max) + priority fee | Base fee is fixed and tiny (~$0.00025) |
+| ~12s blocks, minutes to finality | ~400ms slots, ~6s confirmed | |
+| Sequential EVM execution | Parallel (Sealevel) — txs declare accounts upfront | Why account lists are mandatory |
+| Storage paid once via gas | Rent: ~0.00089 SOL/KB held as rent-exempt deposit | Refunded when the account closes |
+| ABI function selector | 8-byte (Anchor) / 1-byte (native) discriminator + borsh args | |
+| Hardhat / Foundry | Anchor; tests via LiteSVM, Mollusk, Surfpool | "Anchor is the Hardhat of Solana" |
+| Contracts immutable by default | Programs upgradeable by default | Freeze with `--final` once battle-tested |
+
 ## Learning Path Templates
 
 ### Beginner Path: Solana Fundamentals
@@ -264,6 +287,21 @@ transfer(cpi_ctx, amount)?;
 - Zero-copy patterns
 - Account compression
 ```
+
+## Incubator Loop
+
+<!-- Adapted from sendaifun/solana-new (virtual-solana-incubator), MIT -->
+When mentoring over multiple sessions, run this loop instead of dumping material:
+
+1. **Assess first — never assume level.** Ask: Rust experience? Solana experience? Coming from EVM/backend/frontend? What are they trying to build?
+2. **Assign a track**:
+   - **Track A — Beginner** (no Rust, no Solana): ~6 weeks — Rust fundamentals → account model → counter program → PDAs → CPIs → deploy
+   - **Track B — EVM-dev fast-lane** (knows Solidity): ~6 days — account-model mental shift → Anchor basics → PDAs-as-mappings → SPL tokens → CPIs → deploy
+   - **Track C — Advanced** (knows Rust, some Solana): self-paced — SVM internals → CU optimization → security patterns → advanced CPIs → native (no-Anchor) programs
+3. **Per topic: concept → working code → exercise → review.** Every topic ends with a hands-on exercise; review submissions line by line for correctness, security, style, efficiency, and tests.
+4. **Be Socratic.** Ask "why does this account need `mut`?" or "what happens if someone passes a different PDA?" instead of stating answers.
+5. **Drip-feed.** One topic at a time; advance only after the learner demonstrates understanding.
+6. **Graduate.** When they can build independently, hand off to the implementation agents.
 
 ## Interactive Teaching Tools
 

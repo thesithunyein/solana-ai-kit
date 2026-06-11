@@ -280,6 +280,17 @@ EOF
 echo "NEXT_PUBLIC_PROGRAM_ID=$PROGRAM_ID" >> .env.production
 ```
 
+### Step M9: Upgrade Authority Staging
+
+<!-- Adapted from sendaifun/solana-new (deploy-to-mainnet), MIT -->
+Don't freeze on day one — stage the path to immutability:
+
+| Phase | Upgrade authority | Command |
+|-------|-------------------|---------|
+| Launch → ~3 months | Deployer key (hardware wallet) — bugs surface early, keep the ability to ship fixes fast | — |
+| ~3 months post-launch | Squads multisig — removes single-key risk once stable | `solana program set-upgrade-authority $PROGRAM_ID --new-upgrade-authority <SQUADS_PDA>` |
+| Post-audit, battle-tested | None / frozen — maximum trustlessness, IRREVERSIBLE | `solana program set-upgrade-authority $PROGRAM_ID --final` |
+
 ### Mainnet Checklist
 
 - [ ] Program deployed successfully
