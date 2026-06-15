@@ -156,7 +156,7 @@ const amountBN = new BN('1000000000000');
 
 ### Type-safe account fetching (Anchor)
 ```typescript
-import { Program, AnchorProvider } from '@coral-xyz/anchor';
+import { Program, AnchorProvider } from '@anchor-lang/core';
 import { PublicKey } from '@solana/web3.js';
 import { IDL, YourProgram } from './your_program';
 
@@ -496,7 +496,7 @@ describe('calculateFee', () => {
 
 ### JSDoc for exported functions
 ```typescript
-import { Program } from '@coral-xyz/anchor';
+import { Program } from '@anchor-lang/core';
 import { PublicKey } from '@solana/web3.js';
 
 /**

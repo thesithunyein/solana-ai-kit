@@ -83,7 +83,7 @@ solana-ai-kit is also its own Claude Code marketplace serving one **core plugin*
 
 ```text
 /plugin marketplace add solanabr/solana-ai-kit
-/plugin install solana-ai-kit@solana-ai-kit
+/plugin install solana-ai-kit@stbr
 ```
 
 The plugin ships the **core kit**: the 15 agents, 29 commands, the local go-to-market + registry skills (idea-sprint, pitch-deck, hackathon, registry), the 7 MCP servers, and the dev hooks (banner, formatter, pre-deploy/commit gates). Commands and skills are namespaced — `/deploy` becomes `/solana-ai-kit:deploy`.

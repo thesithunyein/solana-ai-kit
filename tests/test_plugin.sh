@@ -22,7 +22,11 @@ assert_json_valid "$PLUGIN_MANIFEST" "plugin.json is valid JSON"
 # Marketplace points its one plugin at ./plugin (NOT ./ — avoids caching tests/install.sh/ext)
 MARKET_CONTENT="$(cat "$MARKETPLACE")"
 assert_contains "$MARKET_CONTENT" '"source": "./plugin"' "marketplace plugin source is ./plugin"
-assert_contains "$MARKET_CONTENT" '"name": "solana-ai-kit"' "marketplace name is solana-ai-kit"
+# Marketplace renamed to stbr (installs as solana-ai-kit@stbr); plugin entry keeps name solana-ai-kit
+MARKET_NAME="$(python3 -c "import json; print(json.load(open('$MARKETPLACE'))['name'])" 2>/dev/null)"
+assert_eq "$MARKET_NAME" "stbr" "marketplace name is stbr"
+PLUGIN_ENTRY_NAME="$(python3 -c "import json; print(json.load(open('$MARKETPLACE'))['plugins'][0]['name'])" 2>/dev/null)"
+assert_eq "$PLUGIN_ENTRY_NAME" "solana-ai-kit" "marketplace plugin entry name is solana-ai-kit"
 
 # --- claude plugin validate (skip-with-note if CLI unavailable in CI) ---
 if command -v claude >/dev/null 2>&1; then

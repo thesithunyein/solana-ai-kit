@@ -39,7 +39,7 @@ Prefer Claude Code's plugin system? solana-ai-kit is its own marketplace. From i
 
 ```text
 /plugin marketplace add solanabr/solana-ai-kit
-/plugin install solana-ai-kit@solana-ai-kit
+/plugin install solana-ai-kit@stbr
 ```
 
 The plugin ships the core kit — agents, commands, the local go-to-market + registry skills, the 7 MCP servers, and the dev hooks. Commands namespace as `/solana-ai-kit:<name>` (e.g. `/solana-ai-kit:deploy`).

@@ -33,7 +33,7 @@ jobs:
           node-version: '20'
 
       - name: Install Anchor
-        run: cargo install --git https://github.com/coral-xyz/anchor anchor-cli --tag v0.31.1
+        run: cargo install --git https://github.com/coral-xyz/anchor anchor-cli --tag v1.0.2 --locked
 
       - name: Claude Code
         uses: anthropics/claude-code-action@v1
