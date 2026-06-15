@@ -1,12 +1,12 @@
 ---
 name: solana-ai-kit
-description: Skill hub for the solana-ai-kit Claude Code plugin. Routes the bundled go-to-market and registry skills, and points to upstream marketplaces (and the install.sh full install) for protocol, security, and ecosystem depth. Progressive disclosure — read only what you need.
+description: Skill hub for the solana-ai-kit Claude Code plugin. Routes the bundled go-to-market skills and the opt-in add-on catalog, and points to upstream marketplaces (and the install.sh full install) for protocol, security, and ecosystem depth. Progressive disclosure — read only what you need.
 user-invocable: true
 ---
 
 # Solana AI Kit — Plugin Skill Hub
 
-This is the **plugin variant** of the kit's skill hub. It ships only the skills that travel cleanly in a plugin (go-to-market wrappers + the registry). For the full depth — protocol/security/ecosystem skills, `.claude/rules/*`, and the curated permissions/sandbox policy — use the **full install** (see "Getting more depth" below).
+This is the **plugin variant** of the kit's skill hub. It ships only the skills that travel cleanly in a plugin (go-to-market wrappers + the opt-in add-on catalog). For the full depth — protocol/security/ecosystem skills, `.claude/rules/*`, and the curated permissions/sandbox policy — use the **full install** (see "Getting more depth" below).
 
 **Source precedence (when multiple skills cover one topic):**
 1. `.claude/rules/*` are law for code style — but rules ship **only** with the full install (`install.sh`), not this plugin. If you installed via the plugin, the house code-style rules are not loaded; prefer them when present.
@@ -26,9 +26,9 @@ Local wrappers, adapted from sendaifun/solana-new (MIT, telemetry removed):
 - [pitch-deck/SKILL.md](pitch-deck/SKILL.md) — Audience-aware decks (hackathon/VC/grant/accelerator): narrative frameworks, slides + speaking notes, objection prep
 - [hackathon/SKILL.md](hackathon/SKILL.md) — Scannable submissions, <3-min demo scripts, least-crowded-track selection, Superteam Earn grants
 
-### Registry & Monitoring
+### Extended add-ons (opt-in catalog)
 
-- [registry/SKILL.md](registry/SKILL.md) — scouting methodology to research/vet new repos, skills, and MCPs + curated, link-rich watchlists ([trusted repos](registry/references/trusted-repos.md), [extended skills](registry/references/extended-skills.md), [optional MCPs](registry/references/optional-mcps.md), [young/unverified watchlist](registry/references/watchlist.md)). The home for opt-in skills and MCPs NOT installed by default.
+- [skill-registry.json](skill-registry.json) — structured, machine-readable catalog of opt-in add-on skills/plugins/MCPs (frontend/design, UX/writing, testing, data, dev-workflow, extra protocols/MCPs) NOT bundled by default. Install on the user's request, at their own expense. Search it by domain/tags, then run the entry's install command only on explicit confirmation.
 
 ## Getting more depth (protocol / security / ecosystem skills)
 
@@ -45,7 +45,7 @@ Several of the upstream skill packs publish their own Claude Code marketplaces. 
 | Security auditing, vulnerability scanning | `/plugin marketplace add trailofbits/skills` | the audit plugins you need |
 | Infrastructure (Workers, Agents SDK, MCP servers) | `/plugin marketplace add cloudflare/skills` | `cloudflare` |
 
-For Jupiter, Metaplex, and Helius the official skill repos are the primary sources — check the registry skill (`registry/SKILL.md`) for their current upstream locations and `/plugin marketplace add` targets. Route to a **marketplace** and install the plugin; do not point at an upstream repo's `SKILL.md` directly.
+For Jupiter, Metaplex, and Helius the official skill repos are the primary sources — check the add-on catalog (`skill-registry.json`) for their current upstream locations and `/plugin marketplace add` targets. Route to a **marketplace** and install the plugin; do not point at an upstream repo's `SKILL.md` directly.
 
 ### Option B — Full install (recommended for project teams)
 
@@ -64,5 +64,5 @@ See the project README ("External Skill Submodules" and "Install as a Claude Cod
 | Idea validation, "what should I build" | idea-sprint/SKILL.md |
 | Pitch deck, demo day, investor or grant slides | pitch-deck/SKILL.md |
 | Hackathon submission, demo script, track choice | hackathon/SKILL.md |
-| Scout new repos/skills/MCPs, registry, what to monitor, "should I add X" | registry/SKILL.md |
+| Opt-in add-on skills/plugins/MCPs, "should I add X", extra capability not bundled | skill-registry.json |
 | Protocol SDK depth (Jupiter, Metaplex, Helius, Raydium…), security audits, infra | add the upstream marketplace (Option A) or do the full install (Option B) |

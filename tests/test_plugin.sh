@@ -39,7 +39,7 @@ fi
 # --- Each plugin symlink target resolves on disk (-e follows symlinks) ---
 echo "[plugin symlinks]"
 for link in agents commands .mcp.json VERSION \
-            skills/idea-sprint skills/pitch-deck skills/hackathon skills/registry; do
+            skills/idea-sprint skills/pitch-deck skills/hackathon skills/skill-registry.json; do
   target="$PLUGIN_DIR/$link"
   TOTAL=$((TOTAL + 1))
   if [ -L "$target" ] && [ -e "$target" ]; then
