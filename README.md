@@ -181,7 +181,7 @@ Pre-configured MCP servers in `.mcp.json` (API keys go in `.env`):
 
 | Layer | Stack |
 |-------|-------|
-| Programs | Anchor 0.31+, Pinocchio, Rust 1.82+ |
+| Programs | Anchor 1.0+, Pinocchio, Rust 1.82+ |
 | Token Extensions | Token-2022 (transfer hooks, confidential transfers, metadata) |
 | Testing | Mollusk, LiteSVM, Surfpool, Trident |
 | Frontend | @solana/kit, Next.js 15, React 19 |
