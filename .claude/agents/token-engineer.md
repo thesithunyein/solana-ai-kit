@@ -130,7 +130,7 @@ pub struct Initialize<'info> {
     #[account(
         init,
         payer = authority,
-        space = 8 + HookState::INIT_SPACE,
+        space = HookState::DISCRIMINATOR.len() + HookState::INIT_SPACE,
         seeds = [b"hook-state", mint.key().as_ref()],
         bump,
     )]

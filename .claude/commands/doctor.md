@@ -99,7 +99,7 @@ fi
 ```
 
 - ✓ `.mcp.json` parses; expected servers listed (helius, solana-dev, context7, playwright, surfpool, ...)
-- ✗ Parse failure → fix-it: `bash .claude/bin/update.sh` (restores stock `.mcp.json`)
+- ✗ Parse failure → fix-it: `curl -fsSL https://raw.githubusercontent.com/solanabr/solana-ai-kit/main/.mcp.json -o .mcp.json`
 - ! Server listed but its API key failed Check 5 → fix-it: `/setup-mcp`
 - ! `.mcp.json` lists `surfpool` but the `surfpool` CLI is missing → fix-it: `curl -L https://surfpool.run/install | sh` (or `brew install txtx/taps/surfpool`)
 

@@ -205,17 +205,18 @@ Like a function call, but across program boundaries.
 
 ### Pattern
 ```rust
-// Transfer tokens via CPI
-let cpi_accounts = Transfer {
+// Transfer tokens via CPI (Anchor 1.0: transfer_checked + program Pubkey)
+let cpi_accounts = TransferChecked {
+    mint: ctx.accounts.mint.to_account_info(),
     from: ctx.accounts.source.to_account_info(),
     to: ctx.accounts.destination.to_account_info(),
     authority: ctx.accounts.authority.to_account_info(),
 };
 let cpi_ctx = CpiContext::new(
-    ctx.accounts.token_program.to_account_info(),
+    ctx.accounts.token_program.key(),
     cpi_accounts
 );
-transfer(cpi_ctx, amount)?;
+transfer_checked(cpi_ctx, amount, ctx.accounts.mint.decimals)?;
 ```
 
 ### Security Considerations

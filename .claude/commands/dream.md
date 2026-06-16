@@ -57,7 +57,7 @@ Within each section, order entries by confidence descending, then date descendin
 
 ### 6. Write Back (cap enforcement)
 
-`MEMORY.md` loads every session start — hard cap **200 lines / 25KB**, index-pointer style (one-line insights pointing at files, not essays).
+`MEMORY.md` loads every session start — hard cap **200 lines / 25KB**, index-pointer style (one-line insights pointing at files, not essays). The richer typed fields (confidence, dates, insight) used during steps 2–5 are processing-only — the written `MEMORY.md` keeps the index-pointer format, with that metadata living in the linked detail files, not the index.
 
 - If over cap after steps 2–5: compress Insights to one line, drop optional Files where obvious, then remove lowest-confidence entries until under cap (tell the user what was cut).
 - Write the consolidated file. Show a before/after diff summary, not the full file.

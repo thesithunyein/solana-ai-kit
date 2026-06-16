@@ -10,7 +10,7 @@ You are conducting an infrastructure-first security audit. `/audit-solana` cover
 
 - [ext/trailofbits/plugins/building-secure-contracts/skills/](../skills/ext/trailofbits/plugins/building-secure-contracts/skills/) — vulnerability scanner, audit prep, code maturity
 - [ext/safe-solana-builder/SKILL.md](../skills/ext/safe-solana-builder/SKILL.md) — 70+ audit-derived security rules
-- See also (submodules arriving with the next config update): [ext/ghostsecurity/](../skills/ext/ghostsecurity/) — SAST criteria, SCA, secrets scanning; [ext/defending-code/](../skills/ext/defending-code/) — threat-model + FP-reducing triage methodology
+- [ext/ghostsecurity/plugins/ghost/skills/](../skills/ext/ghostsecurity/plugins/ghost/skills/) — SAST criteria, SCA, secrets scanning; [ext/defending-code/](../skills/ext/defending-code/) — threat-model + FP-reducing triage methodology
 
 ## Modes
 

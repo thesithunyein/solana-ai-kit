@@ -154,11 +154,11 @@ invoke(&instruction, accounts)?;
 ### Missing Reload After CPI
 ```rust
 // ✓ CORRECT: Reload account after CPI
-token::transfer(cpi_ctx, amount)?;
+transfer_checked(cpi_ctx, amount, mint.decimals)?;
 ctx.accounts.token_account.reload()?;
 
 // ✗ WRONG: Using stale data after CPI
-token::transfer(cpi_ctx, amount)?;
+transfer_checked(cpi_ctx, amount, mint.decimals)?;
 // ... using token_account without reload
 ```
 

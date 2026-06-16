@@ -98,7 +98,7 @@ solana-ai-kit is also its own Claude Code marketplace serving one **core plugin*
 /plugin install solana-ai-kit@stbr
 ```
 
-The plugin ships the **core kit**: the 15 agents, 29 commands, the local go-to-market + registry skills (idea-sprint, pitch-deck, hackathon, registry), the 7 MCP servers, and the dev hooks (banner, formatter, pre-deploy/commit gates). Commands and skills are namespaced — `/deploy` becomes `/solana-ai-kit:deploy`.
+The plugin ships the **core kit**: the 15 agents, 29 commands, the local go-to-market + registry skills (idea-sprint, pitch-deck, hackathon), the 7 MCP servers, and the dev hooks (banner, formatter, pre-deploy/commit gates). Commands and skills are namespaced — `/deploy` becomes `/solana-ai-kit:deploy`.
 
 What the plugin **cannot** carry (Claude Code plugins are plain git clones — they can't init submodules or ship a permissions/sandbox policy), so these stay exclusive to the **full install** (`install.sh`):
 
@@ -106,11 +106,9 @@ What the plugin **cannot** carry (Claude Code plugins are plain git clones — t
 - the curated permissions allowlist + sandbox policy
 - the 18 `ext/` skill submodules (protocol, security, infra, ecosystem depth)
 
-For protocol-skill depth in plugin form, add the upstream marketplaces instead (routing, not copying) — e.g. `/plugin marketplace add sendaifun/skills`, `ghostsecurity/skills`, `trailofbits/skills`, `cloudflare/skills`. The plugin's skill hub and the `registry` skill list the current targets.
+For protocol-skill depth in plugin form, add the upstream marketplaces instead (routing, not copying) — e.g. `/plugin marketplace add sendaifun/skills`, `ghostsecurity/skills`, `trailofbits/skills`, `cloudflare/skills`. The plugin's skill hub and `skill-registry.json` list the current targets.
 
 The two paths are complementary: individuals wanting Solana agents/commands across **all** their projects → plugin at user scope; project teams working in one repo → `install.sh` (full kit). If you enable both in the same project, `/doctor` warns about duplicate commands/hooks/MCP and advises picking one. Plugin auto-update is off by default for third-party marketplaces — refresh with `/plugin marketplace update` + `claude plugin update`.
-
-## Key Features
 
 ## External Skill Submodules
 
@@ -238,7 +236,7 @@ See [`skill-registry.json`](.claude/skills/skill-registry.json) for the complete
 │   ├── claude-code.yml              # Claude Code action template
 │   └── claude.yml                   # @claude mention responder (issues/PRs)
 └── .claude/
-    ├── VERSION                  # Semver version (e.g. 1.4.0)
+    ├── VERSION                  # Semver version (e.g. 2.0.0)
     ├── agents/                  # 15 specialized agents
     ├── bin/
     │   ├── update.sh                # In-place update from upstream

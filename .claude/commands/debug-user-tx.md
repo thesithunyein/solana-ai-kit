@@ -211,7 +211,7 @@ Once the error is identified, check it against the top-20 below — most user-re
 | 7 | `ComputationalBudgetExceeded` / `ProgramFailedToComplete` | Instruction exceeds the CU limit (200k default) | Add `ComputeBudgetProgram.setComputeUnitLimit` sized from a simulation + 20% buffer |
 | 8 | `InsufficientFundsForRent` (0x4) | Account balance below the rent-exempt minimum | Fund with `getMinimumBalanceForRentExemption(dataSize)` at creation |
 | 9 | Token amounts off by 10^n | Hardcoded decimals instead of reading the mint | Read `getMint().decimals` (SOL = 9, USDC = 6, some mints 0) |
-| 10 | `AccountDataTooSmall` / borsh deserialize error | `space` too small for the account struct | Recompute: `8 + <Struct>::INIT_SPACE` via `#[derive(InitSpace)]` |
+| 10 | `AccountDataTooSmall` / borsh deserialize error | `space` too small for the account struct | Recompute: `<Struct>::DISCRIMINATOR.len() + <Struct>::INIT_SPACE` via `#[derive(InitSpace)]` |
 | 11 | `0x0` "already in use" on create | `init` on an account that already exists | Check existence client-side and skip the init instruction |
 | 12 | `ConstraintMut` (2000) | Handler writes to an account not marked `#[account(mut)]` | Add `mut` to the constraint (and `isWritable` client-side) |
 | 13 | `AccountOwnedByWrongProgram` on token ops | SPL Token vs Token-2022 mismatch | Check the mint's owner; pass the matching `token_program` everywhere |
