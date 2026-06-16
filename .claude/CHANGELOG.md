@@ -2,6 +2,15 @@
 
 All notable changes to solana-ai-kit.
 
+## [2.0.1] - 2026-06-16
+
+### Security
+- **Expanded `sandbox.denyWrite`** with specific credential/key files (kept the existing 4): `~/.netrc`, `~/.git-credentials`, `~/.npmrc`, `~/.cargo/credentials.toml`, `~/.docker/config.json`, `~/.config/gh/hosts.yml`, `~/.kube/config`, `~/.pypirc`, `~/.gem/credentials` — targeted credential files only (not whole tool dirs, so legit `cargo`/`gh`/`solana config` operations still work)
+- **Expanded `permissions.deny`** with curated low-UX-cost guards: secret-read/exfil (`cat`/`less`/`xxd` of `*id.json`, `*keypair*.json`, `~/.ssh/*`, `~/.config/solana/*.json`, `~/.aws/*`, `~/.gnupg/*`, `*.pem`, `~/.config/gh/hosts.yml`, `~/.npmrc`, `~/.git-credentials`, `~/.netrc`); destructive-fs (`mkfs*`, `rm -rf ~`/`~/*`/`.git`/`.git/*`, `git clean -fdx*`/`-fX*`); mainnet authority/funds ops (`solana program set-upgrade-authority`, `spl-token set-authority`, `solana program close`, `solana withdraw-from-stake-account`/`-vote-account`)
+
+### Changed
+- **`/cleanup`** now also strips the kit's distribution/maintenance infra from forked-template projects: `.claude-plugin/`, `plugin/`, `vercel.json`, plus the kit-only `.claude/CHANGELOG.md` (all removed defensively, only if present)
+
 ## [2.0.0] - 2026-06-15
 
 ### Added

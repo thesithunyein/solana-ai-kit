@@ -10,7 +10,21 @@
   "sandbox": {
     "enabled": true,
     "filesystem": {
-      "denyWrite": ["~/.ssh", "~/.gnupg", "~/.aws", "~/.config/solana/id.json"]
+      "denyWrite": [
+        "~/.ssh",
+        "~/.gnupg",
+        "~/.aws",
+        "~/.config/solana/id.json",
+        "~/.netrc",
+        "~/.git-credentials",
+        "~/.npmrc",
+        "~/.cargo/credentials.toml",
+        "~/.docker/config.json",
+        "~/.config/gh/hosts.yml",
+        "~/.kube/config",
+        "~/.pypirc",
+        "~/.gem/credentials"
+      ]
     }
   },
 
@@ -230,7 +244,35 @@
       "Bash(spl-token close *)",
       "Bash(git push * --force*)",
       "Bash(git push * -f *)",
-      "Bash(curl *convex.cloud*)"
+      "Bash(curl *convex.cloud*)",
+
+      "Bash(cat *id.json)",
+      "Bash(cat *keypair*.json)",
+      "Bash(cat ~/.ssh/*)",
+      "Bash(cat ~/.config/solana/*.json)",
+      "Bash(cat ~/.aws/*)",
+      "Bash(cat ~/.gnupg/*)",
+      "Bash(cat *.pem)",
+      "Bash(cat ~/.config/gh/hosts.yml)",
+      "Bash(cat ~/.npmrc)",
+      "Bash(cat ~/.git-credentials)",
+      "Bash(cat ~/.netrc)",
+      "Bash(less *id.json)",
+      "Bash(xxd *id.json)",
+
+      "Bash(mkfs*)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf ~/*)",
+      "Bash(rm -rf .git)",
+      "Bash(rm -rf .git/*)",
+      "Bash(git clean -fdx*)",
+      "Bash(git clean -fX*)",
+
+      "Bash(solana program set-upgrade-authority *)",
+      "Bash(spl-token set-authority *)",
+      "Bash(solana program close *)",
+      "Bash(solana withdraw-from-stake-account *)",
+      "Bash(solana withdraw-from-vote-account *)"
     ]
   },
 

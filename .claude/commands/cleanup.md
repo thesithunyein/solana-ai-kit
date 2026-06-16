@@ -19,9 +19,11 @@ If `.env` doesn't exist but `.env.example` does, copy `.env.example` → `.env` 
 
 ## Step 3: Remove scaffolding
 
-Files/dirs that exist only for maintaining the config repo itself.
+Files/dirs that exist only for maintaining or distributing the config repo itself. These ship in a full clone/fork of solana-ai-kit but have no purpose in a downstream project. Remove each **only if present** — never error on a missing path.
 
 **Remove (if they exist):**
+
+Maintenance scaffolding:
 - `install.sh` — installer (not needed after fork)
 - `update.sh` — deprecation wrapper
 - `validate.sh` — config repo validation
@@ -29,18 +31,27 @@ Files/dirs that exist only for maintaining the config repo itself.
 - `CLAUDE-solana.md` — source template (now copied as CLAUDE.md)
 - `QUICK-START.md` — config repo docs
 - `README.md` — config repo readme (user should write their own)
-- `.github/workflows/ci.yml` — config repo CI (keep claude-code.yml if present)
+- `.claude/CHANGELOG.md` — the kit's changelog (not the user's project changelog)
+- `.github/workflows/ci.yml` — config repo CI (keep `claude-code.yml` if present)
 - `.env.example` — should already be copied to .env
 
+Distribution infra (Claude Code plugin marketplace + Vercel install endpoint — only relevant when *publishing* the kit):
+- `.claude-plugin/` — in-repo plugin marketplace manifest
+- `plugin/` — symlinked core-plugin subtree
+- `vercel.json` — install-endpoint redirect config
+
 **Preserve (never touch):**
-- `.claude/` — entire directory (agents, commands, skills, rules, settings, mcp, bin)
+- `.claude/` — entire directory (agents, commands, skills, rules, settings, mcp, `bin/` self-update tooling) — except `.claude/CHANGELOG.md` noted above
 - `CLAUDE.md` — just created/preserved above
 - `CLAUDE.local.md` — private notes
+- `.mcp.json` — MCP server config (user wants this)
+- `.env`, `.env.example` (after .env exists) — config
 - `.gitmodules` — submodule definitions
-- `.env` — secrets
 - `.gitignore` — ignore rules
 - `LICENSE` — keep unless user wants to change
 - Any user-created files
+
+If you encounter a file that looks repo-specific but isn't listed above, flag it to the user rather than removing it.
 
 ## Step 4: Confirm and execute
 
